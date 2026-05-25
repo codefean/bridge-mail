@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Bridge Mail 🌉</title>
+  <title>Bridge Mail — A Raven Finds You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #e83a52;
-      --red-dk: #b02840;
-      --navy:   #0e1c38;
-      --blue:   #14304e;
-      --blue-lt:#1a4870;
-      --text:   #d8eeff;
-      --muted:  #5a7c9a;
-      --bg:     #0a1220;
+      --bg:       #000000;
+      --text:     #c8b888;
+      --bright:   #ede0b8;
+      --gold:     #d4a830;
+      --gold-dk:  #9a7818;
+      --dim:      #3a2c18;
+      --muted:    #705840;
+      --green:    #48a848;
+      --red:      #c04030;
+      --blue:     #5090cc;
+      --white:    #f0e8d0;
     }
 
-    html, body {
-      min-height: 100dvh;
-    }
+    html, body { min-height: 100dvh; }
 
     body {
       background: var(--bg);
@@ -31,98 +32,111 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 16px;
+      padding: 28px 16px 56px;
     }
 
-    /* ══════════════════════════════════════════
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 2px,
+        rgba(0,0,0,.06) 2px,
+        rgba(0,0,0,.06) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ════════════════════════════
        SENDER VIEW
-    ══════════════════════════════════════════ */
+    ════════════════════════════ */
+
     #sender-view {
       width: 100%;
-      max-width: 400px;
-      background: var(--navy);
-      border: 3px solid var(--blue-lt);
-      border-radius: 18px;
-      padding: 30px 22px 26px;
-      box-shadow: 0 0 40px rgba(232,58,82,.12), 0 8px 32px rgba(0,0,0,.5);
+      max-width: 460px;
     }
 
-    .s-title {
+    .logo {
       font-family: 'Press Start 2P', monospace;
-      font-size: 15px;
-      color: var(--red);
+      font-size: clamp(13px, 4vw, 18px);
+      color: var(--gold);
       text-align: center;
-      line-height: 1.7;
-      margin-bottom: 6px;
+      line-height: 2;
+      margin-bottom: 4px;
+      text-shadow: 0 0 24px rgba(212,168,48,.4);
     }
 
-    .s-sub {
+    .logo-sub {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--muted);
       text-align: center;
-      font-size: 10px;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 28px;
+      letter-spacing: 4px;
+      margin-bottom: 10px;
     }
 
-    .field { margin-bottom: 16px; }
-
-    .field-lbl {
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--muted);
-      margin-bottom: 7px;
+    .logo-rule {
+      border: none;
+      border-top: 1px solid var(--dim);
+      margin: 24px 0 32px;
     }
+
+    .s-lbl {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .s-field { margin-bottom: 24px; }
 
     select {
       width: 100%;
-      padding: 12px 38px 12px 14px;
-      background: var(--blue);
-      border: 2px solid var(--blue-lt);
-      border-radius: 9px;
-      color: var(--text);
+      background: #000;
+      border: 1px solid var(--dim);
+      border-radius: 0;
+      color: var(--bright);
       font-family: 'Courier New', monospace;
-      font-size: 15px;
+      font-size: 14px;
+      padding: 11px 12px;
       cursor: pointer;
       -webkit-appearance: none;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%235a7c9a' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      transition: border-color .15s;
+      transition: border-color .12s;
     }
+    select:focus { outline: none; border-color: var(--gold); }
+    select option { background: #0d0d0d; }
 
-    select:focus { outline: none; border-color: var(--red); }
-
-    #generate-btn {
+    .forge-btn {
       width: 100%;
-      padding: 14px;
-      margin-top: 6px;
-      margin-bottom: 20px;
-      background: var(--red);
-      color: #fff;
-      border: none;
-      border-radius: 11px;
+      padding: 15px;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
       font-family: 'Press Start 2P', monospace;
-      font-size: 10px;
-      letter-spacing: 1px;
-      line-height: 1.8;
+      font-size: 8px;
+      letter-spacing: 3px;
       cursor: pointer;
-      transition: background .15s, transform .08s;
-      box-shadow: 0 4px 0 var(--red-dk);
+      transition: background .12s, color .12s, box-shadow .12s;
+      margin-bottom: 28px;
+      line-height: 2;
     }
-
-    #generate-btn:hover  { background: #d03048; }
-    #generate-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--red-dk); }
+    .forge-btn:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212,168,48,.3);
+    }
 
     #link-result {
-      background: rgba(0,0,0,.35);
-      border: 2px solid var(--blue-lt);
-      border-radius: 11px;
-      padding: 14px;
-      animation: fadeUp .3s ease;
+      border: 1px solid var(--dim);
+      padding: 18px;
+      animation: fadeUp .4s ease;
     }
 
     @keyframes fadeUp {
@@ -131,379 +145,332 @@
     }
 
     .res-lbl {
-      font-size: 8px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
       color: var(--muted);
-      margin-bottom: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
     }
 
     .res-url {
       font-size: 11px;
-      color: #70b8e8;
+      color: var(--blue);
       word-break: break-all;
-      line-height: 1.6;
-      margin-bottom: 12px;
+      line-height: 1.7;
+      margin-bottom: 14px;
     }
 
     #copy-btn {
       width: 100%;
-      padding: 11px;
-      background: var(--blue-lt);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      transition: background .15s;
-      letter-spacing: .5px;
-    }
-
-    #copy-btn:hover { background: #1e5888; }
-    #copy-btn.ok    { background: #1a6840; }
-
-    /* ══════════════════════════════════════════
-       GAME VIEW
-    ══════════════════════════════════════════ */
-    #game-view {
-      width: 100%;
-      max-width: 500px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .g-banner {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 9px;
-      color: #88bbdd;
-      letter-spacing: 2px;
-      animation: blink 1.6s step-end infinite;
-    }
-
-    @keyframes blink {
-      50% { opacity: .3; }
-    }
-
-    #game-canvas {
-      display: block;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
-      border: 3px solid #3a2c1c;
-      box-shadow: 0 6px 24px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.04);
-    }
-
-    /* Controls */
-    .ctrl {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 6px 10px 2px;
-    }
-
-    /* D-pad */
-    .dpad {
-      display: grid;
-      grid-template-columns: repeat(3, 46px);
-      grid-template-rows: repeat(3, 46px);
-      gap: 2px;
-    }
-
-    .dp {
-      background: #1e1e34;
-      border: 2px solid #343452;
-      border-radius: 7px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      color: #9898c0;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      transition: background .07s, border-color .07s;
-    }
-
-    .dp:active, .dp.on { background: #38385e; border-color: #6868a8; color: #ccc; }
-    .dp.empty { background: transparent; border-color: transparent; cursor: default; }
-    .dp.mid   { background: #252540; border: 2px solid #343452; border-radius: 50%; cursor: default; }
-
-    /* A/B buttons */
-    .ab-wrap {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .ab-hint {
-      font-size: 8px;
-      color: #3a5060;
-      text-align: center;
-      line-height: 1.5;
-      letter-spacing: .5px;
-      max-width: 140px;
-    }
-
-    .ab-row {
-      display: flex;
-      gap: 10px;
-      align-items: flex-end;
-    }
-
-    .ab-col {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .ab-lbl {
-      font-size: 8px;
-      color: #445566;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .ab {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      border: none;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 13px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
-      box-shadow: 0 4px 0 rgba(0,0,0,.4);
-      transition: transform .06s, box-shadow .06s;
-    }
-
-    .ab:active, .ab.on {
-      transform: translateY(3px);
-      box-shadow: 0 1px 0 rgba(0,0,0,.4);
-    }
-
-    #btn-a { background: #c01038; color: #fff; }
-    #btn-b { background: #104060; color: #fff; }
-
-    /* ══════════════════════════════════════════
-       DIALOG
-    ══════════════════════════════════════════ */
-    #dlg-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.84);
-      z-index: 200;
-      display: flex;
-      align-items: flex-end;
       padding: 12px;
-      backdrop-filter: blur(2px);
-    }
-
-    .dlg-box {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      background: #faf6ec;
-      border: 4px solid #222;
-      border-radius: 10px;
-      box-shadow: inset 0 0 0 2px #f0ead8, 6px 6px 0 #111;
-      padding: 22px 20px 20px;
-      max-height: 78vh;
-      overflow-y: auto;
-      color: #1a1a1a;
-      font-family: 'Courier New', monospace;
-    }
-
-    .dlg-icon  { text-align: center; font-size: 44px; margin-bottom: 10px; }
-
-    .dlg-eyebrow {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: #aaa;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .dlg-bridge {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 13px;
-      color: #0a2f68;
-      text-align: center;
-      line-height: 1.7;
-      margin-bottom: 10px;
-    }
-
-    .dlg-time {
-      font-size: 28px;
-      font-weight: bold;
-      color: #222;
-      text-align: center;
-      letter-spacing: 3px;
-    }
-
-    .dlg-hr {
-      border: none;
-      border-top: 2px dashed #ccc;
-      margin: 18px 0;
-    }
-
-    .dlg-sec {
-      font-size: 8px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: #999;
-      margin-bottom: 10px;
-    }
-
-    .dlg-wiki {
-      font-size: 13px;
-      line-height: 1.8;
-      color: #333;
-    }
-
-    .dlg-wiki.loading {
-      color: #aaa;
-      font-style: italic;
-    }
-
-    .dlg-actions {
-      margin-top: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .dlg-map {
-      display: block;
-      padding: 13px;
-      background: #0a2f68;
-      color: #fff;
-      text-decoration: none;
-      text-align: center;
-      border-radius: 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 13px;
-      letter-spacing: 1px;
-      transition: background .15s;
-    }
-
-    .dlg-map:hover { background: #0d3e88; }
-
-    .dlg-close {
-      width: 100%;
-      padding: 12px;
-      background: #444;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--muted);
+      color: var(--text);
       font-family: 'Courier New', monospace;
       font-size: 12px;
       cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      transition: background .15s;
+      letter-spacing: 1px;
+      transition: border-color .12s, color .12s;
+    }
+    #copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+    #copy-btn.ok    { border-color: var(--green); color: var(--green); }
+
+    /* ════════════════════════════
+       RPG VIEW
+    ════════════════════════════ */
+
+    #rpg-view {
+      width: 100%;
+      max-width: 580px;
     }
 
-    .dlg-close:hover { background: #666; }
+    /* Scene wrapper animation */
+    .scene-enter {
+      animation: fadeUp .45s ease;
+    }
+
+    /* Header */
+    .sc-eyebrow {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .sc-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(11px, 3.5vw, 16px);
+      color: var(--gold);
+      line-height: 1.9;
+      margin-bottom: 28px;
+      text-shadow: 0 0 18px rgba(212,168,48,.3);
+    }
+
+    .sc-hr {
+      border: none;
+      border-top: 1px solid var(--dim);
+      margin: 24px 0;
+    }
+
+    /* Text blocks */
+    .sc-text {
+      font-size: 14px;
+      line-height: 2.2;
+      color: var(--text);
+      white-space: pre-line;
+      margin-bottom: 18px;
+    }
+
+    .sc-speech {
+      font-size: 13px;
+      line-height: 2.1;
+      color: var(--white);
+      font-style: italic;
+      border-left: 3px solid var(--muted);
+      padding: 6px 0 6px 18px;
+      margin: 20px 0;
+      white-space: pre-line;
+    }
+
+    .sc-inscription {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(7px, 2.2vw, 10px);
+      color: var(--gold);
+      line-height: 2.4;
+      text-align: center;
+      letter-spacing: 3px;
+      border: 1px solid var(--dim);
+      padding: 18px 14px;
+      margin: 24px 0;
+      text-shadow: 0 0 12px rgba(212,168,48,.25);
+      white-space: pre-line;
+    }
+
+    /* Blinking cursor */
+    .cursor-blink {
+      display: inline-block;
+      width: 9px;
+      height: 1em;
+      background: var(--gold);
+      vertical-align: text-bottom;
+      animation: blink .75s step-end infinite;
+      margin-left: 1px;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* Options */
+    #scene-opts {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .opt {
+      width: 100%;
+      padding: 14px 16px;
+      background: transparent;
+      border: 1px solid var(--dim);
+      color: var(--text);
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .1s, background .1s, color .1s;
+      position: relative;
+    }
+    .opt::before  { content: '▶  '; color: var(--muted); }
+    .opt:hover:not(:disabled) {
+      border-color: var(--gold);
+      background: rgba(212,168,48,.06);
+      color: var(--bright);
+    }
+    .opt:hover:not(:disabled)::before { color: var(--gold); }
+
+    .opt.correct            { border-color: var(--green); color: var(--green); pointer-events: none; }
+    .opt.correct::before    { color: var(--green); content: '✓  '; }
+    .opt.wrong              { border-color: var(--red);   color: var(--red);   pointer-events: none; }
+    .opt.wrong::before      { color: var(--red);   content: '✗  '; }
+    .opt.dimmed             { opacity: .25; pointer-events: none; }
+
+    /* Feedback */
+    #scene-feedback {
+      margin-top: 18px;
+      font-size: 13px;
+      line-height: 2.1;
+      font-style: italic;
+      white-space: pre-line;
+      min-height: 26px;
+    }
+    #scene-feedback.pos { color: var(--green); }
+    #scene-feedback.neg { color: var(--red); }
+
+    /* Next / Action button */
+    .next-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: background .12s, color .12s, box-shadow .12s;
+      animation: fadeUp .35s ease;
+      line-height: 2;
+    }
+    .next-btn:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212,168,48,.25);
+    }
+
+    /* ════════════════════════════
+       REVELATION
+    ════════════════════════════ */
+
+    .rev-lbl {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .rev-bridge {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(13px, 4.5vw, 22px);
+      color: var(--gold);
+      line-height: 1.9;
+      margin-bottom: 32px;
+      text-shadow: 0 0 28px rgba(212,168,48,.45);
+    }
+
+    .rev-time-lbl {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--muted);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .rev-time {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(22px, 8vw, 44px);
+      color: var(--bright);
+      letter-spacing: 8px;
+      margin-bottom: 36px;
+      text-shadow: 0 0 24px rgba(237,224,184,.2);
+    }
+
+    .rev-wiki {
+      font-size: 13px;
+      line-height: 2.1;
+      color: var(--muted);
+      white-space: pre-line;
+    }
+
+    .rev-map {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: transparent;
+      border: 2px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      letter-spacing: 2px;
+      text-align: center;
+      text-decoration: none;
+      transition: background .12s, color .12s, box-shadow .12s;
+      cursor: pointer;
+      margin-bottom: 12px;
+      line-height: 2;
+    }
+    .rev-map:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 20px rgba(212,168,48,.25);
+    }
+
+    .rev-footer {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 7px;
+      color: var(--dim);
+      text-align: center;
+      letter-spacing: 3px;
+      margin-top: 32px;
+      line-height: 2.5;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .4; }
+      50%       { opacity: 1;  }
+    }
+
+    /* Skip hint */
+    .skip-hint {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 6px;
+      color: var(--dim);
+      text-align: right;
+      letter-spacing: 2px;
+      margin-top: 10px;
+      margin-bottom: -4px;
+      animation: blink 1.8s step-end infinite;
+    }
   </style>
 </head>
 <body>
 
 <!-- ══ SENDER ══ -->
 <div id="sender-view">
-  <div class="s-title">🌉 Bridge Mail</div>
-  <div class="s-sub">Secret meeting planner</div>
+  <div class="logo">🌉 BRIDGE MAIL</div>
+  <div class="logo-sub">— Send a Raven —</div>
+  <hr class="logo-rule">
 
-  <div class="field">
-    <div class="field-lbl">Choose a bridge</div>
+  <div class="s-field">
+    <div class="s-lbl">Choose the crossing</div>
     <select id="bridge-sel">
       <option value="">— Select a bridge —</option>
     </select>
   </div>
 
-  <div class="field">
-    <div class="field-lbl">Meeting time</div>
+  <div class="s-field">
+    <div class="s-lbl">Hour of meeting</div>
     <select id="time-sel">
       <option value="">— Select a time —</option>
     </select>
   </div>
 
-  <button id="generate-btn">✉️ Generate Secret Link</button>
+  <button class="forge-btn" id="generate-btn">⚔ &nbsp;FORGE THE SUMMONS</button>
 
   <div id="link-result" style="display:none">
-    <div class="res-lbl">Share this link</div>
+    <div class="res-lbl">The raven is ready</div>
     <div class="res-url" id="res-url"></div>
-    <button id="copy-btn">📋 Copy Link + Message</button>
+    <button id="copy-btn">✉ &nbsp;Copy Summons &amp; Link</button>
   </div>
 </div>
 
-<!-- ══ GAME ══ -->
-<div id="game-view" style="display:none">
-  <div class="g-banner">📬 YOU'VE GOT MAIL!</div>
-  <canvas id="game-canvas"></canvas>
-  <div class="ctrl">
-
-    <div class="dpad">
-      <div class="dp empty"></div>
-      <div class="dp" id="dp-u">▲</div>
-      <div class="dp empty"></div>
-      <div class="dp" id="dp-l">◀</div>
-      <div class="dp mid"></div>
-      <div class="dp" id="dp-r">▶</div>
-      <div class="dp empty"></div>
-      <div class="dp" id="dp-d">▼</div>
-      <div class="dp empty"></div>
-    </div>
-
-    <div class="ab-wrap">
-      <div class="ab-hint">Walk to the mailbox<br>then press A</div>
-      <div class="ab-row">
-        <div class="ab-col">
-          <button class="ab" id="btn-b">B</button>
-          <div class="ab-lbl">back</div>
-        </div>
-        <div class="ab-col">
-          <button class="ab" id="btn-a">A</button>
-          <div class="ab-lbl">open</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ══ DIALOG ══ -->
-<div id="dlg-overlay" style="display:none">
-  <div class="dlg-box">
-    <div class="dlg-icon">✉️</div>
-    <div class="dlg-eyebrow">Secret Rendezvous</div>
-    <div class="dlg-bridge" id="dlg-bridge">—</div>
-    <div class="dlg-time"   id="dlg-time">—</div>
-    <hr class="dlg-hr">
-    <div class="dlg-sec">📖 About this bridge</div>
-    <div class="dlg-wiki loading" id="dlg-wiki">Loading…</div>
-    <div class="dlg-actions">
-      <a class="dlg-map" id="dlg-map" href="#" target="_blank">📍 Open in Maps</a>
-      <button class="dlg-close" id="dlg-close">Close [B]</button>
-    </div>
-  </div>
+<!-- ══ RPG VIEW ══ -->
+<div id="rpg-view" style="display:none">
+  <div id="scene-wrap"></div>
 </div>
 
 <script>
 'use strict';
 
-/* ─────────────────────────────────────────
+/* ══════════════════════════════════════════
    DATA
-───────────────────────────────────────── */
+══════════════════════════════════════════ */
 const BRIDGES = [
   { name:'Vasabron',            wiki:'Vasabron',             maps:'https://maps.app.goo.gl/JJYS38JAxVi4h6tx7' },
   { name:'Skeppsholmsbron',     wiki:'Skeppsholmsbron',      maps:'https://maps.app.goo.gl/dc441PBre7dkrmqr6' },
@@ -535,39 +502,33 @@ const TIMES = (() => {
   return t;
 })();
 
-/* ─────────────────────────────────────────
-   BASE URL  ← set this to your GitHub Pages URL
-   e.g. 'https://yourname.github.io/bridge-mail/'
-   Leave as '' to auto-detect from window.location
-───────────────────────────────────────── */
 const BASE_URL_OVERRIDE = 'https://codefean.github.io/bridge-mail/';
 
 function getBaseUrl() {
   if (BASE_URL_OVERRIDE) return BASE_URL_OVERRIDE.replace(/\?.*$/, '').replace(/\/$/, '');
   const href = location.href;
-  // Detect srcdoc preview (Claude artifact iframe)
   if (href.startsWith('about:') || href.startsWith('blob:')) return null;
   return href.replace(/\?.*$/, '');
 }
 
-/* ─────────────────────────────────────────
+/* ══════════════════════════════════════════
    ROUTING
-───────────────────────────────────────── */
+══════════════════════════════════════════ */
 const qp = new URLSearchParams(location.search);
 const qb = qp.get('b'), qt = qp.get('t');
 const bi = parseInt(qb);
 
 if (qb !== null && qt !== null && !isNaN(bi) && BRIDGES[bi]) {
   document.getElementById('sender-view').style.display = 'none';
-  document.getElementById('game-view').style.display  = 'flex';
-  initGame(bi, qt);
+  document.getElementById('rpg-view').style.display    = 'block';
+  initRPG(bi, qt);
 } else {
   initSender();
 }
 
-/* ─────────────────────────────────────────
+/* ══════════════════════════════════════════
    SENDER
-───────────────────────────────────────── */
+══════════════════════════════════════════ */
 function initSender() {
   const bSel = document.getElementById('bridge-sel');
   const tSel = document.getElementById('time-sel');
@@ -578,26 +539,24 @@ function initSender() {
   let shareMsg = '';
 
   document.getElementById('generate-btn').onclick = () => {
-    if (bSel.value === '' || tSel.value === '') {
-      alert('Please select both a bridge and a time!');
+    if (!bSel.value || !tSel.value) {
+      alert('Choose both a bridge and an hour of meeting.');
       return;
     }
     const base = getBaseUrl();
     const name = BRIDGES[parseInt(bSel.value)].name;
 
     if (!base) {
-      // Running inside Claude preview — show a helpful warning
       document.getElementById('res-url').textContent =
-        '⚠️ Deploy to GitHub Pages first — links don\'t work in the Claude preview. ' +
-        'Once deployed, your link will look like: https://yourname.github.io/bridge-mail/?b=' +
+        '⚠ Deploy to GitHub Pages first. Link preview: https://yourname.github.io/bridge-mail/?b=' +
         bSel.value + '&t=' + encodeURIComponent(tSel.value);
       document.getElementById('link-result').style.display = 'block';
       shareMsg = '';
       return;
     }
 
-    const url  = `${base}?b=${bSel.value}&t=${encodeURIComponent(tSel.value)}`;
-    shareMsg = `Meet me at ${name} kl. ${tSel.value}! 🌉\n\nI've hidden the spot in a secret link:\n${url}`;
+    const url = `${base}?b=${bSel.value}&t=${encodeURIComponent(tSel.value)}`;
+    shareMsg   = `A raven bears this for you.\n\nFollow the link, answer the trials, and you shall know where to find me.\n\n${url}`;
 
     document.getElementById('res-url').textContent = url;
     document.getElementById('link-result').style.display = 'block';
@@ -611,379 +570,424 @@ function initSender() {
     } catch {
       const ta = Object.assign(document.createElement('textarea'), { value: shareMsg });
       Object.assign(ta.style, { position:'fixed', opacity:'0' });
-      document.body.appendChild(ta);
-      ta.focus(); ta.select();
-      document.execCommand('copy');
-      ta.remove();
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      document.execCommand('copy'); ta.remove();
     }
-    btn.textContent = '✅ Copied!';
+    btn.textContent = '✓  Raven Dispatched!';
     btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = '📋 Copy Link + Message'; btn.classList.remove('ok'); }, 2500);
+    setTimeout(() => { btn.textContent = '✉ \u00a0Copy Summons & Link'; btn.classList.remove('ok'); }, 2600);
   };
 }
 
-/* ─────────────────────────────────────────
-   GAME
-───────────────────────────────────────── */
-function initGame(bIdx, time) {
+/* ══════════════════════════════════════════
+   RPG ENGINE
+══════════════════════════════════════════ */
+function initRPG(bIdx, time) {
   const bridge = BRIDGES[bIdx];
-
-  // Kick off wiki fetch immediately
   let wikiText = null;
+  let sceneIdx  = 0;
+  let skipFlag  = false;
+
+  // Pre-fetch wiki immediately
   fetchWiki(bridge.wiki).then(t => { wikiText = t; });
 
-  // ── World map: 12 cols × 10 rows ──
-  // W=wall  T=tree  .=grass  P=path  M=mailbox  @=player start (walkable)
-  const MAP = [
-    'WWWWWWWWWWWW',  // row 0
-    'WTTTTTTTTTTW',  // row 1
-    'WT...P....TW',  // row 2
-    'WT.T.M.T..TW',  // row 3  — mailbox at col 5
-    'WT...P....TW',  // row 4
-    'W....P.....W',  // row 5
-    'W..T.P.T...W',  // row 6
-    'W....P.....W',  // row 7
-    'W....@.....W',  // row 8  — player starts at col 5
-    'WWWWWWWWWWWW',  // row 9
+  const wrap = document.getElementById('scene-wrap');
+
+  /* ── Scene definitions ────────────────────── */
+  const SCENES = [
+
+    /* 0 — PROLOGUE */
+    {
+      eyebrow: '',
+      title:   'A RAVEN FINDS YOU',
+      content: [
+        { type:'text',
+          text:'A black raven lands upon the sill at dusk, as the last light bleeds out of the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
+        { type:'text',
+          text:'You break the seal. The parchment is brief.' },
+        { type:'speech',
+          text:'"A rendezvous awaits you at the water. But the crossing must be earned — not given.\n\nThree trials stand between you and the knowing.\n\nProve yourself worthy, wanderer."' },
+        { type:'text',
+          text:'The raven holds your gaze a moment longer than feels natural.\n\nThen it is gone.' },
+      ],
+      action: { label:'▶  BEGIN THE JOURNEY', next:1 },
+    },
+
+    /* 1 — TRIAL I */
+    {
+      eyebrow: 'TRIAL I OF III',
+      title:   'THE FERRYMAN\'S RIDDLE',
+      content: [
+        { type:'text',
+          text:'The road narrows until it meets a black river. No boat. No ferryman in sight — only an old man hunched on a mossy stone, smoking a short clay pipe, watching the water.\n\nHe does not look up as you approach.' },
+        { type:'speech',
+          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from the pipe. "But you\'ll need to understand the crossing. Answer me this:"' },
+        { type:'speech',
+          text:'"I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood and silence alike. I ask for nothing. What am I?"' },
+      ],
+      options: [
+        {
+          text:    'A boatman.',
+          correct: false,
+          response:'He spits slowly into the current. "A boatman tires. A boatman drowns. I have stood since before your grandfather\'s grandfather drew his first breath."\n\nHe looks at you with patient eyes. "Try again."',
+        },
+        {
+          text:    'A bridge.',
+          correct: true,
+          response:'A slow smile crosses his weathered face. He does not speak immediately — he lets the silence confirm it.\n\n"Aye. Most would say *boat*. Few think of what endures." He rises from the stone and gestures down the bank. "The path continues ahead."',
+        },
+        {
+          text:    'The river itself.',
+          correct: false,
+          response:'"The river answers to no one," he mutters. "It takes, it moves, it does not carry by choice."\n\nHe resettles on the stone and says nothing more. The implication is clear: try again.',
+        },
+      ],
+    },
+
+    /* 2 — TRIAL II */
+    {
+      eyebrow: 'TRIAL II OF III',
+      title:   'THE WEIGHT OF THE ROAD',
+      content: [
+        { type:'text',
+          text:'The road climbs into grey hills and the air grows cold. At a ruined waypost — one of the old stone markers, half-sunk into the earth — a traveller sits in the mud.\n\nOlder. Road-worn. Boot torn through at the sole, water-skin empty and crumpled.' },
+        { type:'text',
+          text:'They look up as you pass. There is no begging in their eyes. Only the quiet, exhausted dignity of someone who has fallen far and knows it.' },
+        { type:'speech',
+          text:'"I ask for nothing," they say. "Only water, if you have some to spare."' },
+        { type:'text',
+          text:'You have just enough for yourself. Someone is waiting for you at journey\'s end.\n\nThe road does not grow shorter while you stand here.' },
+      ],
+      options: [
+        {
+          text:    'Give the water — honour demands no less.',
+          anyCorrect: true,
+          response:'You hand over the skin without hesitation. The traveller drinks deeply, then holds it back out to you. You wave it off.\n\n"May your road be kinder than mine," they say.\n\nYou walk on — thirstier now, but somehow lighter for it.',
+        },
+        {
+          text:    'Leave your last few coins and press on.',
+          anyCorrect: true,
+          response:'You press the coins into their hand and keep moving. Not everything they need — but something.\n\n"I\'ll manage," they say quietly.\n\nYou carry on with a practical conscience and an empty purse.',
+        },
+        {
+          text:    'Describe the nearest shelter and move on.',
+          anyCorrect: true,
+          response:'You explain clearly: two hills east, a cottage with a blue door. The traveller listens carefully, nods, repeats the directions back to confirm.\n\n"That\'ll do," they say.\n\nSometimes words are enough. You move on with purpose.',
+        },
+      ],
+    },
+
+    /* 3 — TRIAL III */
+    {
+      eyebrow: 'TRIAL III OF III',
+      title:   'THE ARCH OF OATHS',
+      content: [
+        { type:'text',
+          text:'The path descends at last toward water. You can hear it — the cold sound of a river, the damp smell of stone and current and distance.\n\nBut the crossing has one last gatehouse.' },
+        { type:'text',
+          text:'A weathered arch stands alone in the evening half-light, older than the road itself, older perhaps than the city you are walking toward. The stone is dark. The words carved into it have been worn smooth by centuries of passing hands.' },
+        { type:'inscription',
+          text:'"WHAT DO YOU CARRY\nACROSS?"' },
+        { type:'text',
+          text:'It is not a riddle.\n\nIt is an oath.' },
+      ],
+      options: [
+        {
+          text:    'My word. Nothing more.',
+          anyCorrect: true,
+          response:'The stone is silent for a long moment.\n\nThen, somewhere deep within it, something shifts — a settling, like a held breath finally released. The arch holds no magic. But oaths have their own weight.\n\nYou step through.',
+        },
+        {
+          text:    'Whatever the crossing demands of me.',
+          anyCorrect: true,
+          response:'The stone does not answer.\n\nBut the path beyond the arch looks clearer than it did before — the way forward obvious and unobstructed.\n\nYou step through.',
+        },
+        {
+          text:    'An open heart and enough patience.',
+          anyCorrect: true,
+          response:'The air around the arch changes — quieter, steadier. As if the world drew in half a breath and held it.\n\nThe stone says nothing. But it does not stop you.\n\nYou step through.',
+        },
+      ],
+    },
+
+    /* 4 — REVELATION */
+    { type:'revelation' },
+
   ];
 
-  const COLS = 12, ROWS = 10;
-  const MX = 5, MY = 3; // mailbox grid position
+  /* ── Utilities ──────────────────────────── */
 
-  // ── Canvas ──
-  const canvas = document.getElementById('game-canvas');
-  const ctx    = canvas.getContext('2d');
-  let T; // tile size in px
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-  function setT() {
-    T = Math.floor(Math.min(window.innerWidth - 22, 490) / COLS);
-    canvas.width  = T * COLS;
-    canvas.height = T * ROWS;
-  }
-  setT();
-  window.addEventListener('resize', () => { setT(); draw(); });
+  async function typeEl(el, text, speed = 15) {
+    el.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor-blink';
+    el.appendChild(cursor);
 
-  // ── Player ──
-  let px = 5, py = 8; // grid col, row
-  let wf = 0;          // walk frame
-
-  // ── Blink timer for interact hint ──
-  let hintOn = true;
-  setInterval(() => { hintOn = !hintOn; if (nearBox()) draw(); }, 480);
-
-  // ── Helpers ──
-  function getTile(c, r) {
-    if (r < 0 || r >= ROWS || c < 0 || c >= COLS) return 'W';
-    return MAP[r][c];
-  }
-
-  function walkable(c, r) {
-    const t = getTile(c, r);
-    return t === '.' || t === 'P' || t === '@';
-  }
-
-  function nearBox() {
-    return Math.abs(px - MX) + Math.abs(py - MY) === 1;
-  }
-
-  // ── Draw: grass ──
-  function dGrass(c, r) {
-    const x = c*T, y = r*T;
-    ctx.fillStyle = '#6ebb40';
-    ctx.fillRect(x, y, T, T);
-    ctx.fillStyle = '#5aa030';
-    // Deterministic texture dots
-    const s = (c*7 + r*13) % 5;
-    const pts = [[.14,.3],[.62,.12],[.38,.7],[.8,.5],[.06,.8]];
-    const p = pts[s];
-    ctx.fillRect((x + p[0]*T)|0, (y + p[1]*T)|0, Math.max(1,(T*.1)|0), Math.max(1,(T*.1)|0));
-  }
-
-  // ── Draw: path ──
-  function dPath(c, r) {
-    const x = c*T, y = r*T;
-    ctx.fillStyle = '#d4b870';
-    ctx.fillRect(x, y, T, T);
-    ctx.fillStyle = '#c0a460';
-    const s = (c*3 + r*11) % 3;
-    if (s === 0) ctx.fillRect((x+T*.18)|0, (y+T*.35)|0, (T*.16)|0, (T*.12)|0);
-    if (s === 1) ctx.fillRect((x+T*.6)|0,  (y+T*.55)|0, (T*.14)|0, (T*.1)|0);
-  }
-
-  // ── Draw: wall ──
-  function dWall(c, r) {
-    const x = c*T, y = r*T;
-    ctx.fillStyle = '#46382a';
-    ctx.fillRect(x, y, T, T);
-    const hw = (T/2)|0, hh = (T/2)|0;
-    ctx.fillStyle = '#564838';
-    if ((c+r) % 2 === 0) {
-      ctx.fillRect(x+1, y+1, hw-2, hh-2);
-      ctx.fillRect(x+hw+1, y+hh+1, T-hw-2, T-hh-2);
-    } else {
-      ctx.fillRect(x+hw+1, y+1, T-hw-2, hh-2);
-      ctx.fillRect(x+1, y+hh+1, hw-2, T-hh-2);
+    let built = '';
+    for (const ch of text) {
+      if (skipFlag) { el.textContent = text; return; }
+      built += ch;
+      el.textContent = built;
+      el.appendChild(cursor);
+      await sleep(ch === '\n' ? 85 : speed);
     }
-    ctx.fillStyle = '#342818';
-    ctx.fillRect(x+hw, y, 1, T);
-    ctx.fillRect(x, y+hh, T, 1);
+    el.textContent = text;
   }
 
-  // ── Draw: tree ──
-  function dTree(c, r) {
-    const x = c*T, y = r*T;
-    dGrass(c, r);
-    // Shadow
-    ctx.fillStyle = 'rgba(0,0,0,.18)';
-    ctx.beginPath();
-    ctx.ellipse((x+T*.55)|0, (y+T*.8)|0, (T*.3)|0, (T*.1)|0, 0, 0, Math.PI*2);
-    ctx.fill();
-    // Trunk
-    const tw = Math.max(2,(T*.2)|0), th = (T*.28)|0;
-    ctx.fillStyle = '#6a4018';
-    ctx.fillRect((x+(T-tw)/2)|0, y+T-th, tw, th);
-    // Leaves, 3 layers
-    const cx = x + T/2;
-    const layers = [
-      { oy:.44, r:.42, col:'#187010' },
-      { oy:.30, r:.30, col:'#1e8818' },
-      { oy:.18, r:.20, col:'#28a028' },
-    ];
-    layers.forEach(l => {
-      ctx.fillStyle = l.col;
-      ctx.beginPath();
-      ctx.arc(cx, y+l.oy*T, l.r*T, 0, Math.PI*2);
-      ctx.fill();
+  /* ── Scene renderer ─────────────────────── */
+
+  function renderScene(idx) {
+    skipFlag = false;
+    const scene = SCENES[idx];
+
+    if (scene.type === 'revelation') { renderRevelation(); return; }
+
+    wrap.innerHTML = '';
+    const div = document.createElement('div');
+    div.className = 'scene-enter';
+    wrap.appendChild(div);
+
+    // Header
+    if (scene.eyebrow) {
+      const ey = document.createElement('div');
+      ey.className = 'sc-eyebrow';
+      ey.textContent = scene.eyebrow;
+      div.appendChild(ey);
+    }
+    const titleEl = document.createElement('div');
+    titleEl.className = 'sc-title';
+    titleEl.textContent = scene.title;
+    div.appendChild(titleEl);
+
+    const hr = document.createElement('hr');
+    hr.className = 'sc-hr';
+    div.appendChild(hr);
+
+    const contentArea = document.createElement('div');
+    div.appendChild(contentArea);
+
+    // Skip hint
+    const hint = document.createElement('div');
+    hint.className = 'skip-hint';
+    hint.textContent = 'TAP TO SKIP ▶';
+    div.appendChild(hint);
+
+    let typingDone = false;
+    const skipTyping = () => { if (!typingDone) skipFlag = true; };
+    wrap.addEventListener('click', skipTyping);
+
+    (async () => {
+      for (const block of scene.content) {
+        await sleep(skipFlag ? 0 : 220);
+
+        let el;
+        if (block.type === 'text') {
+          el = document.createElement('p'); el.className = 'sc-text';
+        } else if (block.type === 'speech') {
+          el = document.createElement('div'); el.className = 'sc-speech';
+        } else if (block.type === 'inscription') {
+          el = document.createElement('div'); el.className = 'sc-inscription';
+        }
+        contentArea.appendChild(el);
+
+        const spd = block.type === 'inscription' ? 24 : 15;
+        await typeEl(el, block.text, skipFlag ? 0 : spd);
+        await sleep(skipFlag ? 0 : 280);
+      }
+
+      typingDone = true;
+      hint.remove();
+      wrap.removeEventListener('click', skipTyping);
+
+      if (scene.options) renderOptions(div, scene);
+      else if (scene.action) renderAction(div, scene.action);
+    })();
+  }
+
+  /* ── Options ────────────────────────────── */
+
+  function renderOptions(parent, scene) {
+    const optsDiv = document.createElement('div');
+    optsDiv.id = 'scene-opts';
+    parent.appendChild(optsDiv);
+
+    const feedback = document.createElement('div');
+    feedback.id = 'scene-feedback';
+    parent.appendChild(feedback);
+
+    let answered = false;
+    let locked   = false;
+
+    scene.options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'opt';
+      btn.textContent = opt.text;
+      optsDiv.appendChild(btn);
+
+      btn.onclick = async () => {
+        if (locked || answered || btn.classList.contains('wrong')) return;
+
+        const isCorrect = opt.correct === true || opt.anyCorrect === true;
+        locked = true;
+
+        if (isCorrect) {
+          answered = true;
+          btn.classList.add('correct');
+          optsDiv.querySelectorAll('.opt:not(.correct)').forEach(b => b.classList.add('dimmed'));
+          feedback.className = 'pos';
+          feedback.textContent = '';
+          skipFlag = false;
+
+          await typeEl(feedback, opt.response, 13);
+
+          // Next button
+          const nb = document.createElement('button');
+          nb.className = 'next-btn';
+          nb.style.marginTop = '28px';
+          nb.textContent = sceneIdx >= 3 ? '▶  APPROACH THE CROSSING' : '▶  CONTINUE THE JOURNEY';
+          parent.appendChild(nb);
+          nb.onclick = () => { sceneIdx++; renderScene(sceneIdx); };
+
+          locked = false;
+        } else {
+          // Wrong — allow retry
+          btn.classList.add('wrong');
+          feedback.className = 'neg';
+          feedback.textContent = '';
+          skipFlag = false;
+          await typeEl(feedback, opt.response, 13);
+          locked = false;
+        }
+      };
     });
   }
 
-  // ── Draw: mailbox ──
-  function dMailbox(c, r) {
-    const x = c*T, y = r*T;
-    dGrass(c, r);
-    // Post
-    const pw = Math.max(2,(T*.1)|0);
-    ctx.fillStyle = '#807868';
-    ctx.fillRect((x+(T-pw)/2)|0, (y+T*.52)|0, pw, (T*.48)|0);
-    // Box body
-    const bx=(x+T*.18)|0, bw=(T*.64)|0, by=(y+T*.14)|0, bh=(T*.38)|0;
-    // Lower rect
-    ctx.fillStyle = '#c01818';
-    ctx.fillRect(bx, by+(bh/2)|0, bw, (bh/2)|0);
-    // Dome
-    ctx.fillStyle = '#d82020';
-    ctx.beginPath();
-    ctx.arc(x+T/2, by+(bh/2)|0, bw/2, Math.PI, 0);
-    ctx.fill();
-    // Slot
-    ctx.fillStyle = '#801010';
-    ctx.fillRect(bx+(bw*.15)|0, by+(bh*.58)|0, (bw*.7)|0, Math.max(1,(bh*.12)|0));
-    // Flag (yellow = mail!)
-    ctx.fillStyle = '#f8c820';
-    const fx = bx + bw;
-    ctx.fillRect(fx, (by-T*.06)|0, Math.max(2,(T*.06)|0), (T*.22)|0);
-    ctx.fillRect(fx, (by-T*.06)|0, (T*.18)|0, (T*.1)|0);
+  /* ── Action button (prologue only) ─────── */
+
+  function renderAction(parent, action) {
+    const btn = document.createElement('button');
+    btn.className = 'next-btn';
+    btn.style.marginTop = '28px';
+    btn.textContent = action.label;
+    parent.appendChild(btn);
+    btn.onclick = () => { sceneIdx = action.next; renderScene(sceneIdx); };
   }
 
-  // ── Draw: player ──
-  function dPlayer(c, r, f) {
-    const x = c*T, y = r*T;
-    // Shoes
-    ctx.fillStyle = '#181008';
-    if (f === 0) {
-      ctx.fillRect((x+T*.28)|0, (y+T*.76)|0, (T*.18)|0, (T*.2)|0);
-      ctx.fillRect((x+T*.54)|0, (y+T*.76)|0, (T*.18)|0, (T*.2)|0);
-    } else {
-      ctx.fillRect((x+T*.22)|0, (y+T*.79)|0, (T*.2)|0,  (T*.18)|0);
-      ctx.fillRect((x+T*.58)|0, (y+T*.72)|0, (T*.2)|0,  (T*.18)|0);
-    }
-    // Pants
-    ctx.fillStyle = '#2a2860';
-    ctx.fillRect((x+T*.28)|0, (y+T*.56)|0, (T*.44)|0, (T*.22)|0);
-    // Body
-    ctx.fillStyle = '#3858cc';
-    ctx.fillRect((x+T*.22)|0, (y+T*.3)|0,  (T*.56)|0, (T*.28)|0);
-    // Arms
-    ctx.fillStyle = '#3858cc';
-    if (f === 0) {
-      ctx.fillRect((x+T*.08)|0, (y+T*.32)|0, (T*.14)|0, (T*.2)|0);
-      ctx.fillRect((x+T*.78)|0, (y+T*.32)|0, (T*.14)|0, (T*.2)|0);
-    } else {
-      ctx.fillRect((x+T*.08)|0, (y+T*.36)|0, (T*.14)|0, (T*.2)|0);
-      ctx.fillRect((x+T*.78)|0, (y+T*.27)|0, (T*.14)|0, (T*.2)|0);
-    }
-    // Head
-    ctx.fillStyle = '#f8c880';
-    ctx.fillRect((x+T*.3)|0,  (y+T*.06)|0, (T*.4)|0,  (T*.26)|0);
-    // Hair
-    ctx.fillStyle = '#5a3010';
-    ctx.fillRect((x+T*.28)|0, (y+T*.04)|0, (T*.44)|0, (T*.12)|0);
-    // Eyes
-    ctx.fillStyle = '#201810';
-    ctx.fillRect((x+T*.36)|0, (y+T*.16)|0, (T*.1)|0,  (T*.08)|0);
-    ctx.fillRect((x+T*.54)|0, (y+T*.16)|0, (T*.1)|0,  (T*.08)|0);
+  /* ── Revelation ─────────────────────────── */
+
+  async function renderRevelation() {
+    wrap.innerHTML = '';
+    const div = document.createElement('div');
+    div.className = 'scene-enter';
+    wrap.appendChild(div);
+
+    skipFlag = false;
+
+    // Header
+    const ey = document.createElement('div');
+    ey.className = 'sc-eyebrow';
+    ey.textContent = 'THE CROSSING REVEALS ITSELF';
+    div.appendChild(ey);
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'sc-title';
+    titleEl.textContent = 'YOU ARE WORTHY';
+    div.appendChild(titleEl);
+
+    const hr = document.createElement('hr'); hr.className = 'sc-hr'; div.appendChild(hr);
+
+    // Skip handler — only for typing portion
+    let revTypingDone = false;
+    const skipRev = () => { if (!revTypingDone) skipFlag = true; };
+    wrap.addEventListener('click', skipRev);
+
+    const hint = document.createElement('div');
+    hint.className = 'skip-hint';
+    div.appendChild(hint);
+    hint.textContent = 'TAP TO SKIP ▶';
+
+    // Intro
+    const intro = document.createElement('p'); intro.className = 'sc-text'; div.appendChild(intro);
+    await typeEl(intro, 'The trials are complete.\n\nThe path ahead is clear.\n\nYou have earned what was hidden.', skipFlag ? 0 : 15);
+    await sleep(skipFlag ? 0 : 500);
+
+    const hr2 = document.createElement('hr'); hr2.className = 'sc-hr'; div.appendChild(hr2);
+
+    // ── Bridge name ──
+    const brLbl = document.createElement('div'); brLbl.className = 'rev-lbl'; div.appendChild(brLbl);
+    await typeEl(brLbl, 'THE PLACE OF MEETING', skipFlag ? 0 : 20);
+    await sleep(skipFlag ? 0 : 200);
+
+    const brEl = document.createElement('div'); brEl.className = 'rev-bridge'; div.appendChild(brEl);
+    await typeEl(brEl, bridge.name, skipFlag ? 0 : 55);
+    await sleep(skipFlag ? 0 : 700);
+
+    // ── Time ──
+    const tmLbl = document.createElement('div'); tmLbl.className = 'rev-time-lbl'; div.appendChild(tmLbl);
+    await typeEl(tmLbl, 'AT THE HOUR OF', skipFlag ? 0 : 20);
+    await sleep(skipFlag ? 0 : 200);
+
+    const tmEl = document.createElement('div'); tmEl.className = 'rev-time'; div.appendChild(tmEl);
+    await typeEl(tmEl, time, skipFlag ? 0 : 75);
+    await sleep(skipFlag ? 0 : 700);
+
+    const hr3 = document.createElement('hr'); hr3.className = 'sc-hr'; div.appendChild(hr3);
+
+    // ── Wiki ──
+    const wLbl = document.createElement('div');
+    wLbl.className = 'sc-eyebrow';
+    wLbl.style.marginBottom = '14px';
+    wLbl.textContent = 'OF THIS PLACE, IT IS WRITTEN:';
+    div.appendChild(wLbl);
+
+    const wEl = document.createElement('div'); wEl.className = 'rev-wiki'; div.appendChild(wEl);
+
+    const wikiContent = wikiText || await fetchWiki(bridge.wiki);
+    wikiText = wikiContent;
+
+    revTypingDone = true;
+    hint.remove();
+    wrap.removeEventListener('click', skipRev);
+
+    await typeEl(wEl, wikiContent, skipFlag ? 0 : 7);
+
+    const hr4 = document.createElement('hr'); hr4.className = 'sc-hr'; div.appendChild(hr4);
+
+    // Maps link
+    const mapA = document.createElement('a');
+    mapA.className = 'rev-map';
+    mapA.href = bridge.maps;
+    mapA.target = '_blank';
+    mapA.rel = 'noopener noreferrer';
+    mapA.textContent = '📍  OPEN IN MAPS';
+    div.appendChild(mapA);
+
+    // Footer
+    const footer = document.createElement('div');
+    footer.className = 'rev-footer';
+    footer.textContent = 'Do not be late.';
+    div.appendChild(footer);
   }
 
-  // ── Draw: "Press A" hint bubble above mailbox ──
-  function dHint() {
-    if (!hintOn) return;
-    const bx = MX*T, by = MY*T;
-    const bw = (T*2.2)|0, bh = (T*.62)|0;
-    const hx = (bx + T/2 - bw/2)|0;
-    const hy = (by - bh - T*.14)|0;
-    // Bubble fill
-    ctx.fillStyle = 'rgba(255,254,220,.97)';
-    ctx.fillRect(hx, hy, bw, bh);
-    // Border
-    ctx.strokeStyle = '#444';
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(hx, hy, bw, bh);
-    // Tail triangle
-    ctx.fillStyle = 'rgba(255,254,220,.97)';
-    ctx.beginPath();
-    ctx.moveTo((bx+T*.4)|0, hy+bh);
-    ctx.lineTo((bx+T*.5)|0, hy+bh+(T*.16)|0);
-    ctx.lineTo((bx+T*.6)|0, hy+bh);
-    ctx.fill();
-    // Text
-    ctx.fillStyle = '#222';
-    ctx.font = `bold ${Math.max(7,(T*.21)|0)}px monospace`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText('Press A', (bx+T/2)|0, (hy+bh/2)|0);
-    ctx.textBaseline = 'alphabetic';
-  }
-
-  // ── Main draw ──
-  function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLS; c++) {
-        const tile = MAP[r][c];
-        if      (tile === 'W') dWall(c, r);
-        else if (tile === 'T') dTree(c, r);
-        else if (tile === 'M') dMailbox(c, r);
-        else if (tile === 'P') dPath(c, r);
-        else                   dGrass(c, r); // '.', '@'
-      }
-    }
-    dPlayer(px, py, wf);
-    if (nearBox()) dHint();
-  }
-
-  draw();
-
-  // ── Movement ──
-  function move(dc, dr) {
-    const nc = px+dc, nr = py+dr;
-    if (!walkable(nc, nr)) return;
-    px = nc; py = nr; wf ^= 1;
-    draw();
-  }
-
-  function interact() {
-    if (nearBox()) openDlg();
-  }
-
-  // ── Keyboard ──
-  document.addEventListener('keydown', e => {
-    if (document.getElementById('dlg-overlay').style.display !== 'none') {
-      if (['Escape','b','B'].includes(e.key)) closeDlg();
-      return;
-    }
-    switch(e.key) {
-      case 'ArrowUp':    e.preventDefault(); move(0,-1); break;
-      case 'ArrowDown':  e.preventDefault(); move(0, 1); break;
-      case 'ArrowLeft':  e.preventDefault(); move(-1,0); break;
-      case 'ArrowRight': e.preventDefault(); move( 1,0); break;
-      case 'z': case 'Z': case 'Enter': interact(); break;
-    }
-  });
-
-  // ── Swipe on canvas ──
-  let sx, sy;
-  canvas.addEventListener('touchstart', e => { sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, { passive:true });
-  canvas.addEventListener('touchend', e => {
-    if (document.getElementById('dlg-overlay').style.display !== 'none') return;
-    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy;
-    if (Math.abs(dx)<12 && Math.abs(dy)<12) { interact(); return; }
-    if (Math.abs(dx) > Math.abs(dy)) move(dx>0?1:-1, 0);
-    else                             move(0, dy>0?1:-1);
-  }, { passive:true });
-
-  // ── D-pad buttons ──
-  function bindDpad(id, dc, dr) {
-    const el = document.getElementById(id);
-    let iv = null;
-    const go    = () => move(dc, dr);
-    const start = e => { e.preventDefault(); go(); el.classList.add('on'); iv = setInterval(go, 155); };
-    const stop  = e => { e.preventDefault(); el.classList.remove('on'); clearInterval(iv); iv=null; };
-    el.addEventListener('touchstart',  start, {passive:false});
-    el.addEventListener('touchend',    stop,  {passive:false});
-    el.addEventListener('touchcancel', stop,  {passive:false});
-    el.addEventListener('mousedown',  start);
-    el.addEventListener('mouseup',    stop);
-    el.addEventListener('mouseleave', stop);
-  }
-  bindDpad('dp-u', 0,-1);
-  bindDpad('dp-d', 0, 1);
-  bindDpad('dp-l',-1, 0);
-  bindDpad('dp-r', 1, 0);
-
-  function bindAB(id, fn) {
-    const el = document.getElementById(id);
-    el.addEventListener('touchstart', e => { e.preventDefault(); fn(); el.classList.add('on'); }, {passive:false});
-    el.addEventListener('touchend',   e => { e.preventDefault(); el.classList.remove('on'); },   {passive:false});
-    el.addEventListener('click', fn);
-  }
-  bindAB('btn-a', interact);
-  bindAB('btn-b', closeDlg);
-
-  // ── Dialog ──
-  function openDlg() {
-    document.getElementById('dlg-bridge').textContent = bridge.name;
-    document.getElementById('dlg-time').textContent   = `kl. ${time}`;
-    document.getElementById('dlg-map').href           = bridge.maps;
-
-    const wEl = document.getElementById('dlg-wiki');
-    if (wikiText) {
-      wEl.textContent = wikiText;
-      wEl.classList.remove('loading');
-    } else {
-      wEl.textContent = 'Loading…';
-      wEl.classList.add('loading');
-      fetchWiki(bridge.wiki).then(t => {
-        wikiText = t;
-        wEl.textContent = t;
-        wEl.classList.remove('loading');
-      });
-    }
-    document.body.style.overflow = 'hidden';
-    document.getElementById('dlg-overlay').style.display = 'flex';
-  }
-
-  function closeDlg() {
-    document.getElementById('dlg-overlay').style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('dlg-close').onclick = closeDlg;
-  document.getElementById('dlg-overlay').addEventListener('click', e => {
-    if (e.target.id === 'dlg-overlay') closeDlg();
-  });
+  /* ── Start ──────────────────────────────── */
+  renderScene(0);
 }
 
-/* ─────────────────────────────────────────
+/* ══════════════════════════════════════════
    WIKIPEDIA FETCH
-───────────────────────────────────────── */
+══════════════════════════════════════════ */
 async function fetchWiki(title) {
   try {
-    const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);
+    const r = await fetch(
+      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`
+    );
     if (!r.ok) throw 0;
     const d = await r.json();
-    return d.extract || 'No summary available.';
+    return d.extract || 'No record of this crossing remains in the old texts.';
   } catch {
-    return 'Bridge information could not be loaded. Visit Wikipedia for more details.';
+    return 'The ancient records of this bridge were lost to time and water. Seek it out for yourself.';
   }
 }
 </script>
