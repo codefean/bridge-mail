@@ -9,19 +9,18 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg:       #000000;
-      --text:     #c8b888;
-      --bright:   #ede0b8;
-      --gold:     #d4a830;
-      --gold-dk:  #9a7818;
-      --dim:      #3a2c18;
-      --muted:    #705840;
-      --green:    #48a848;
-      --red:      #c04030;
-      --blue:     #5090cc;
-      --white:    #f0e8d0;
-    }
+:root {
+  --bg:         #000000;
+  --text:       #8cba8c;  
+  --bright:     #cce8cc; 
+  --green:      #48a848;  
+  --green-dk:   #2d7a2d;  
+  --dim:        #182a18;  
+  --muted:      #486848;  
+  --red:        #c04030;
+  --blue:       #5090cc;
+  --white:      #e0f0e0;  
+}
 
     html, body { min-height: 100dvh; }
 
@@ -602,11 +601,11 @@ function initRPG(bIdx, time) {
       title:   'A RAVEN FINDS YOU',
       content: [
         { type:'text',
-          text:'A black raven lands upon your windowsill (iPhone), as the light bleeds in from the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
+          text:'A black raven lands upon your windowsill, as the light bleeds in from the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
         { type:'text',
           text:'You break the seal.' },
         { type:'speech',
-          text:'"A rendezvous awaits you at the northern water. But the location of the crossing must be earned, not given. \n\nProve yourself worthy, begin walking."' },
+          text:'"A rendezvous awaits you. But the location of the crossing must be earned, not given. \n\nProve yourself worthy."' },
         { type:'text',
           text:'The raven holds your gaze a moment longer... then it vanishes into thin air.' },
       ],
@@ -619,9 +618,9 @@ function initRPG(bIdx, time) {
       title:   'THE FERRYMAN\'S RIDDLE',
       content: [
         { type:'text',
-          text:' road narrows until it meets a black river. No boat. No ferryman in sight... only an old man hunched on a mossy stone, smoking a short clay pipe, watching the water.\n\nHe does not look up as you approach.' },
+          text:' road narrows until it meets a river. No boat. No ferry in sight... only an old man hunched on a mossy stone, smoking a huge blunt - playing Fetty Wap on his JBL speaker, watching the water.\n\nHe does not look up as you approach.' },
         { type:'speech',
-          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from the pipe. "But you\'ll need to understand the crossing. Answer me this:"' },
+          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from blunt. "But you\'ll need to understand the crossing. Answer me this:"' },
         { type:'speech',
           text:'"I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood and silence alike. I ask for nothing. What am I?"' },
       ],
@@ -695,7 +694,7 @@ function initRPG(bIdx, time) {
   ],
   options: [
     {
-      text: 'Pull the lever. Save the herum.',
+      text: 'Pull the lever. Save the harem of whores.',
       anyCorrect: true,
       response: 'Your hand finds the lever before your mind does.\n\nThe gate swings. The cart veers. The whores scatter at the noise, confused, unhurt.\n\nThe pimp does not scatter.\n\nYou carry that burder of killing a successfull small business owner. You will carry it a long way.',
     },
