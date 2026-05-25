@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Bridge Mail — A Raven Finds You</title>
+  <title>A Raven Finds You</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
@@ -433,7 +433,7 @@
 
 <!-- ══ SENDER ══ -->
 <div id="sender-view">
-  <div class="logo">🌉 BRIDGE MAIL</div>
+  <div class="logo">SUMMON YOUR BADDIE</div>
   <div class="logo-sub">— Send a Raven —</div>
   <hr class="logo-rule">
 
@@ -602,13 +602,13 @@ function initRPG(bIdx, time) {
       title:   'A RAVEN FINDS YOU',
       content: [
         { type:'text',
-          text:'A black raven lands upon the sill at dusk, as the last light bleeds out of the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
+          text:'A black raven lands upon your windowsill (iPhone), as the light bleeds in from the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
         { type:'text',
-          text:'You break the seal. The parchment is brief.' },
+          text:'You break the seal.' },
         { type:'speech',
-          text:'"A rendezvous awaits you at the water. But the crossing must be earned — not given.\n\nThree trials stand between you and the knowing.\n\nProve yourself worthy, wanderer."' },
+          text:'"A rendezvous awaits you at the northern water. But the location of the crossing must be earned, not given. \n\nProve yourself worthy, begin walking."' },
         { type:'text',
-          text:'The raven holds your gaze a moment longer than feels natural.\n\nThen it is gone.' },
+          text:'The raven holds your gaze a moment longer... then it vanishes into thin air.' },
       ],
       action: { label:'▶  BEGIN THE JOURNEY', next:1 },
     },
@@ -619,7 +619,7 @@ function initRPG(bIdx, time) {
       title:   'THE FERRYMAN\'S RIDDLE',
       content: [
         { type:'text',
-          text:'The road narrows until it meets a black river. No boat. No ferryman in sight — only an old man hunched on a mossy stone, smoking a short clay pipe, watching the water.\n\nHe does not look up as you approach.' },
+          text:' road narrows until it meets a black river. No boat. No ferryman in sight... only an old man hunched on a mossy stone, smoking a short clay pipe, watching the water.\n\nHe does not look up as you approach.' },
         { type:'speech',
           text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from the pipe. "But you\'ll need to understand the crossing. Answer me this:"' },
         { type:'speech',
@@ -629,7 +629,7 @@ function initRPG(bIdx, time) {
         {
           text:    'A boatman.',
           correct: false,
-          response:'He spits slowly into the current. "A boatman tires. A boatman drowns. I have stood since before your grandfather\'s grandfather drew his first breath."\n\nHe looks at you with patient eyes. "Try again."',
+          response:'He spits slowly into the current. "A boatman tires. A boatman drowns."\n\nHe looks at you with patient eyes. "Try again."',
         },
         {
           text:    'A bridge.',
@@ -644,71 +644,68 @@ function initRPG(bIdx, time) {
       ],
     },
 
-    /* 2 — TRIAL II */
+/* 2 — TRIAL II */
+{
+  eyebrow: 'TRIAL II OF III',
+  title:   'THE SEXY PENGUIN OF THE FROZEN PASS',
+  content: [
+    { type:'text',
+      text:'The road climbs into frosted hills and the air bites sharp as a blade. At a crumbling waypost, half-buried beneath snow... a penguin sits in a drift.\n\nFlippers cracked from the cold, belly feathers matted with ice and mud, but he is kinda sexy.' },
+    { type:'text',
+      text:'He looks up as you pass and hits you with a wink. There is charm in his small black eyes... but, also pain as he waddled very far and knows it.' },
+    { type:'speech',
+      text:'"I ask for nothing," the penguin says. "Only some snus, if thou hast some to spare. Preferably extra strong."' },
+    { type:'text',
+      text:'Thou hast just enough for thyself. The Baron of the Frozen Keep awaits thee at journey\'s end.\n\nThe pass does not grow shorter while thou standest here.' },
+  ],
+  options: [
     {
-      eyebrow: 'TRIAL II OF III',
-      title:   'THE WEIGHT OF THE ROAD',
-      content: [
-        { type:'text',
-          text:'The road climbs into grey hills and the air grows cold. At a ruined waypost — one of the old stone markers, half-sunk into the earth — a traveller sits in the mud.\n\nOlder. Road-worn. Boot torn through at the sole, water-skin empty and crumpled.' },
-        { type:'text',
-          text:'They look up as you pass. There is no begging in their eyes. Only the quiet, exhausted dignity of someone who has fallen far and knows it.' },
-        { type:'speech',
-          text:'"I ask for nothing," they say. "Only water, if you have some to spare."' },
-        { type:'text',
-          text:'You have just enough for yourself. Someone is waiting for you at journey\'s end.\n\nThe road does not grow shorter while you stand here.' },
-      ],
-      options: [
-        {
-          text:    'Give the water — honour demands no less.',
-          anyCorrect: true,
-          response:'You hand over the skin without hesitation. The traveller drinks deeply, then holds it back out to you. You wave it off.\n\n"May your road be kinder than mine," they say.\n\nYou walk on — thirstier now, but somehow lighter for it.',
-        },
-        {
-          text:    'Leave your last few coins and press on.',
-          anyCorrect: true,
-          response:'You press the coins into their hand and keep moving. Not everything they need — but something.\n\n"I\'ll manage," they say quietly.\n\nYou carry on with a practical conscience and an empty purse.',
-        },
-        {
-          text:    'Describe the nearest shelter and move on.',
-          anyCorrect: true,
-          response:'You explain clearly: two hills east, a cottage with a blue door. The traveller listens carefully, nods, repeats the directions back to confirm.\n\n"That\'ll do," they say.\n\nSometimes words are enough. You move on with purpose.',
-        },
-      ],
+      text:    'Give your snus to the sexy penguin — honour demands no less.',
+      anyCorrect: true,
+      response:'Thou handest over the snus without hesitation. The penguin hits a double decker with solemn gratitude, then bows its small head low.\n\n"May thy road be warmer than mine," he says.\n\nThou walkest on, greatful to have helped such a sexy penguin.',
     },
+    {
+      text:    'Leave thy last few coins and press on.',
+      anyCorrect: true,
+      response:'Thou pressest the coins into its flipper and keepest moving. Coins buy little snus — but something.\n\n"I shall manage," the penguin says quietly.\n\nThou carriest on with a practical conscience and an empty purse.',
+    },
+    {
+      text:    'Describe the nearest snus shop and move on.',
+      anyCorrect: true,
+      response:'Thou explainist clearly: two hills east, a stall with a yellow banner. The penguin listens carefully, nods, repeats the directions back with a solemn honk.\n\n"That shall do," it says.\n\nSometimes words are enough. Thou movest on with purpose.',
+    },
+  ],
+},
 
-    /* 3 — TRIAL III */
+/* 3 — TRIAL III */
+{
+  eyebrow: 'TRIAL III OF III',
+  title:   'THE CART DILEMA',
+  content: [
+    { type: 'text',
+      text: 'The path descends at last toward water. You can hear it — the cold sound of a river, the damp smell of stone and current and distance.\n\nBut the crossing has one last gatehouse.' },
+    { type: 'text',
+      text: 'A weathered arch stands alone in the evening half-light. Through it, you see the mill road — and understand at once that something is terribly wrong.' },
+    { type: 'text',
+      text: 'A grain cart has broken free from its yoke at the top of the hill. It is gathering speed. At the bottom, five village whores are in the road, backs turned, deaf to your shouting.\n\nBeside you, a wooden lever controls a millrace gate. Pulling it will redirect the cart down the other road, in it stands the pimp.\n\nHe is old. He cannot run.' },
+    { type: 'inscription',
+      text: '"WHOM DO YOU SAVE??"' },
+    { type: 'text',
+      text: 'You have time for one choice.\n\nOr none at all.' },
+  ],
+  options: [
     {
-      eyebrow: 'TRIAL III OF III',
-      title:   'THE ARCH OF OATHS',
-      content: [
-        { type:'text',
-          text:'The path descends at last toward water. You can hear it — the cold sound of a river, the damp smell of stone and current and distance.\n\nBut the crossing has one last gatehouse.' },
-        { type:'text',
-          text:'A weathered arch stands alone in the evening half-light, older than the road itself, older perhaps than the city you are walking toward. The stone is dark. The words carved into it have been worn smooth by centuries of passing hands.' },
-        { type:'inscription',
-          text:'"WHAT DO YOU CARRY\nACROSS?"' },
-        { type:'text',
-          text:'It is not a riddle.\n\nIt is an oath.' },
-      ],
-      options: [
-        {
-          text:    'My word. Nothing more.',
-          anyCorrect: true,
-          response:'The stone is silent for a long moment.\n\nThen, somewhere deep within it, something shifts — a settling, like a held breath finally released. The arch holds no magic. But oaths have their own weight.\n\nYou step through.',
-        },
-        {
-          text:    'Whatever the crossing demands of me.',
-          anyCorrect: true,
-          response:'The stone does not answer.\n\nBut the path beyond the arch looks clearer than it did before — the way forward obvious and unobstructed.\n\nYou step through.',
-        },
-        {
-          text:    'An open heart and enough patience.',
-          anyCorrect: true,
-          response:'The air around the arch changes — quieter, steadier. As if the world drew in half a breath and held it.\n\nThe stone says nothing. But it does not stop you.\n\nYou step through.',
-        },
-      ],
+      text: 'Pull the lever. Save the herum.',
+      anyCorrect: true,
+      response: 'Your hand finds the lever before your mind does.\n\nThe gate swings. The cart veers. The whores scatter at the noise, confused, unhurt.\n\nThe pimp does not scatter.\n\nYou carry that burder of killing a successfull small business owner. You will carry it a long way.',
     },
+    {
+      text: 'Do nothing. It is not your hand that set the cart moving.',
+      anyCorrect: true,
+      response: 'You do not pull the lever.\n\nThe cart does what carts do on hills.\n\nThe whores are flattened before you reach them. Five slutty ghosts now haunt you.',
+    },
+  ],
+},
 
     /* 4 — REVELATION */
     { type:'revelation' },
