@@ -620,9 +620,7 @@ function initRPG(bIdx, time) {
         { type:'text',
           text:' The road narrows until it meets a river. No boat. No ferry in sight... only an old man hunched on a mossy stone, smoking a huge blunt - playing Fetty Wap on his JBL speaker, watching the water.\n\nHe does not look up as you approach.' },
         { type:'speech',
-          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from blunt. "But you\'ll need to understand the crossing. Answer me this:"' },
-        { type:'speech',
-          text:'"I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood and silence alike. I ask for nothing. What am I?"' },
+          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from blunt. "But you\'ll need to understand the crossing. Answer me this: I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood and silence alike. I ask for nothing. What am I?"' },
       ],
       options: [
         {
@@ -633,7 +631,7 @@ function initRPG(bIdx, time) {
         {
           text:    'A bridge.',
           correct: true,
-          response:'A slow smile crosses his weathered face. He does not speak immediately — he lets the silence confirm it.\n\n"Aye. Most would say *boat*. Few think of what endures." He rises from the stone and gestures down the bank. "The path continues ahead."',
+          response:'A slow smile crosses his weathered face. He does not speak immediately — he lets the silence confirm it.\n\n"Aye. Most would say boat. Few think of what endures." He rises from the stone and gestures down the bank. "The path continues ahead."',
         },
         {
           text:    'The river itself.',
@@ -906,7 +904,7 @@ function initRPG(bIdx, time) {
 
     // Intro
     const intro = document.createElement('p'); intro.className = 'sc-text'; div.appendChild(intro);
-    await typeEl(intro, 'The trials are complete.\n\nThe path ahead is clear.\n\nYou have earned what was hidden.', skipFlag ? 0 : 15);
+    await typeEl(intro, 'The trials are complete The path ahead is clear.\n\nYou have earned what was hidden.', skipFlag ? 0 : 15);
     await sleep(skipFlag ? 0 : 500);
 
     const hr2 = document.createElement('hr'); hr2.className = 'sc-hr'; div.appendChild(hr2);
