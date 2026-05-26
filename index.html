@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Summon a Baddie</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>YOUVE BEEN SUMMONED</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-  --bg:         #000000;
-  --text:       #8cba8c;  
-  --bright:     #cce8cc; 
-  --green:      #48a848;  
-  --green-dk:   #2d7a2d;  
-  --dim:        #182a18;  
-  --muted:      #486848;  
-  --red:        #c04030;
-  --blue:       #5090cc;
-  --white:      #e0f0e0;  
-}
+    :root {
+      --bg:       #000000;
+      --text:     #8cba8c;
+      --bright:   #cce8cc;
+      --green:    #48a848;
+      --green-dk: #2d7a2d;
+      --dim:      #182a18;
+      --muted:    #486848;
+      --red:      #c04030;
+      --blue:     #5090cc;
+      --white:    #e0f0e0;
+      --gold:     #d4a830;
+    }
 
     html, body { min-height: 100dvh; }
 
@@ -34,7 +35,6 @@
       padding: 28px 16px 56px;
     }
 
-    /* Scanline overlay */
     body::before {
       content: '';
       position: fixed;
@@ -50,13 +50,9 @@
       z-index: 9999;
     }
 
-    /* ════════════════════════════
-       SENDER VIEW
-    ════════════════════════════ */
-
     #sender-view {
       width: 100%;
-      max-width: 460px;
+      max-width: 500px;
     }
 
     .logo {
@@ -93,9 +89,9 @@
       margin-bottom: 10px;
     }
 
-    .s-field { margin-bottom: 24px; }
+    .s-field { margin-bottom: 22px; }
 
-    select {
+    input, select {
       width: 100%;
       background: #000;
       border: 1px solid var(--dim);
@@ -103,21 +99,26 @@
       color: var(--bright);
       font-family: 'Courier New', monospace;
       font-size: 14px;
-      padding: 11px 12px;
-      cursor: pointer;
-      -webkit-appearance: none;
-      appearance: none;
+      padding: 12px;
       transition: border-color .12s;
     }
-    select:focus { outline: none; border-color: var(--gold); }
+
+    input:focus, select:focus { outline: none; border-color: var(--gold); }
     select option { background: #0d0d0d; }
 
-    .forge-btn {
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
+    .forge-btn, .next-btn, .rev-map {
       width: 100%;
       padding: 15px;
       background: transparent;
-  border: 2px solid var(--green);
-  color: var(--green);
+      border: 2px solid var(--green);
+      color: var(--green);
       font-family: 'Press Start 2P', monospace;
       font-size: 8px;
       letter-spacing: 3px;
@@ -125,11 +126,15 @@
       transition: background .12s, color .12s, box-shadow .12s;
       margin-bottom: 28px;
       line-height: 2;
+      text-align: center;
+      text-decoration: none;
+      display: block;
     }
-    .forge-btn:hover {
-  background: var(--green);
-  color: #000;
-  box-shadow: 0 0 20px rgba(72,168,72,.3);
+
+    .forge-btn:hover, .rev-map:hover {
+      background: var(--green);
+      color: #000;
+      box-shadow: 0 0 20px rgba(72,168,72,.3);
     }
 
     #link-result {
@@ -160,7 +165,12 @@
       margin-bottom: 14px;
     }
 
-    #copy-btn {
+    .copy-row {
+      display: grid;
+      gap: 10px;
+    }
+
+    #copy-btn, #sms-btn {
       width: 100%;
       padding: 12px;
       background: transparent;
@@ -171,25 +181,20 @@
       cursor: pointer;
       letter-spacing: 1px;
       transition: border-color .12s, color .12s;
+      text-decoration: none;
+      text-align: center;
     }
-    #copy-btn:hover { border-color: var(--gold); color: var(--gold); }
-    #copy-btn.ok    { border-color: var(--green); color: var(--green); }
 
-    /* ════════════════════════════
-       RPG VIEW
-    ════════════════════════════ */
+    #copy-btn:hover, #sms-btn:hover { border-color: var(--gold); color: var(--gold); }
+    #copy-btn.ok { border-color: var(--green); color: var(--green); }
 
     #rpg-view {
       width: 100%;
       max-width: 580px;
     }
 
-    /* Scene wrapper animation */
-    .scene-enter {
-      animation: fadeUp .45s ease;
-    }
+    .scene-enter { animation: fadeUp .45s ease; }
 
-    /* Header */
     .sc-eyebrow {
       font-family: 'Press Start 2P', monospace;
       font-size: 7px;
@@ -214,7 +219,6 @@
       margin: 24px 0;
     }
 
-    /* Text blocks */
     .sc-text {
       font-size: 14px;
       line-height: 2.2;
@@ -248,7 +252,6 @@
       white-space: pre-line;
     }
 
-    /* Blinking cursor */
     .cursor-blink {
       display: inline-block;
       width: 9px;
@@ -258,9 +261,9 @@
       animation: blink .75s step-end infinite;
       margin-left: 1px;
     }
+
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* Options */
     #scene-opts {
       margin-top: 28px;
       display: flex;
@@ -282,6 +285,7 @@
       transition: border-color .1s, background .1s, color .1s;
       position: relative;
     }
+
     .opt::before  { content: '▶  '; color: var(--muted); }
     .opt:hover:not(:disabled) {
       border-color: var(--gold);
@@ -289,14 +293,10 @@
       color: var(--bright);
     }
     .opt:hover:not(:disabled)::before { color: var(--gold); }
+    .opt.correct { border-color: var(--green); color: var(--green); pointer-events: none; }
+    .opt.correct::before { color: var(--green); content: '✓  '; }
+    .opt.dimmed { opacity: .25; pointer-events: none; }
 
-    .opt.correct            { border-color: var(--green); color: var(--green); pointer-events: none; }
-    .opt.correct::before    { color: var(--green); content: '✓  '; }
-    .opt.wrong              { border-color: var(--red);   color: var(--red);   pointer-events: none; }
-    .opt.wrong::before      { color: var(--red);   content: '✗  '; }
-    .opt.dimmed             { opacity: .25; pointer-events: none; }
-
-    /* Feedback */
     #scene-feedback {
       margin-top: 18px;
       font-size: 13px;
@@ -304,35 +304,27 @@
       font-style: italic;
       white-space: pre-line;
       min-height: 26px;
+      color: var(--green);
     }
-    #scene-feedback.pos { color: var(--green); }
-    #scene-feedback.neg { color: var(--red); }
 
-    /* Next / Action button */
     .next-btn {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      background: transparent;
-      border: 2px solid var(--gold);
+      border-color: var(--gold);
       color: var(--gold);
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      letter-spacing: 2px;
-      cursor: pointer;
-      transition: background .12s, color .12s, box-shadow .12s;
       animation: fadeUp .35s ease;
-      line-height: 2;
+      margin-top: 28px;
     }
+
     .next-btn:hover {
       background: var(--gold);
       color: #000;
       box-shadow: 0 0 20px rgba(212,168,48,.25);
     }
 
-    /* ════════════════════════════
-       REVELATION
-    ════════════════════════════ */
+    .rev-card {
+      border: 1px solid var(--dim);
+      padding: 18px;
+      margin: 18px 0 26px;
+    }
 
     .rev-lbl {
       font-family: 'Press Start 2P', monospace;
@@ -340,73 +332,26 @@
       color: var(--muted);
       letter-spacing: 4px;
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
-    .rev-bridge {
+    .rev-big {
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(13px, 4.5vw, 22px);
       color: var(--gold);
       line-height: 1.9;
-      margin-bottom: 32px;
+      margin-bottom: 22px;
       text-shadow: 0 0 28px rgba(212,168,48,.45);
-    }
-
-    .rev-time-lbl {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 7px;
-      color: var(--muted);
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      word-break: break-word;
     }
 
     .rev-time {
       font-family: 'Press Start 2P', monospace;
-      font-size: clamp(22px, 8vw, 44px);
+      font-size: clamp(16px, 5vw, 28px);
       color: var(--bright);
-      letter-spacing: 8px;
-      margin-bottom: 36px;
+      line-height: 1.8;
+      margin-bottom: 22px;
       text-shadow: 0 0 24px rgba(237,224,184,.2);
-    }
-
-    .rev-wiki {
-      font-size: 13px;
-      line-height: 2.1;
-      color: var(--muted);
-      white-space: pre-line;
-    }
-
-    .rev-map {
-      display: block;
-      width: 100%;
-      padding: 15px;
-      background: transparent;
-  background: transparent;
-  border: 2px solid var(--green);
-  color: var(--green);
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: background .12s, color .12s, box-shadow .12s;
-      margin-bottom: 28px;
-      line-height: 2;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 8px;
-      letter-spacing: 2px;
-      text-align: center;
-      text-decoration: none;
-      transition: background .12s, color .12s, box-shadow .12s;
-      cursor: pointer;
-      margin-bottom: 12px;
-      line-height: 2;
-      
-    }
-    .rev-map:hover {
-      background: var(--gold);
-      color: #000;
-      box-shadow: 0 0 20px rgba(212,168,48,.25);
     }
 
     .rev-footer {
@@ -419,12 +364,12 @@
       line-height: 2.5;
       animation: pulse 3s ease-in-out infinite;
     }
+
     @keyframes pulse {
       0%, 100% { opacity: .4; }
-      50%       { opacity: 1;  }
+      50% { opacity: 1; }
     }
 
-    /* Skip hint */
     .skip-hint {
       font-family: 'Press Start 2P', monospace;
       font-size: 6px;
@@ -439,76 +384,54 @@
 </head>
 <body>
 
-<!-- ══ SENDER ══ -->
 <div id="sender-view">
-  <div class="logo">SUMMON YOUR BADDIE</div>
-  <div class="logo-sub">— Send a Raven —</div>
+  <div class="logo">YOUVE BEEN SUMMONED</div>
+  <div class="logo-sub">— complete the quest to know when & where —</div>
   <hr class="logo-rule">
 
   <div class="s-field">
-    <div class="s-lbl">Choose the crossing</div>
-    <select id="bridge-sel">
-      <option value="">— Select a bridge —</option>
+    <div class="s-lbl">Recipient name</div>
+    <input id="name-in" type="text" placeholder="e.g. Maya" autocomplete="off" />
+  </div>
+
+  <div class="s-field">
+    <div class="s-lbl">Google Maps link</div>
+    <input id="maps-in" type="url" placeholder="Paste a Google Maps link" inputmode="url" />
+    <div class="hint">Short links like maps.app.goo.gl work. If the link contains a place name, the quest will show it too.</div>
+  </div>
+
+  <div class="s-field">
+    <div class="s-lbl">Quest length</div>
+    <select id="parts-sel">
+      <option value="1">1 part — quick reveal</option>
+      <option value="2">2 parts — medium quest</option>
+      <option value="3" selected>3 parts — full quest</option>
     </select>
   </div>
 
   <div class="s-field">
-    <div class="s-lbl">Hour of meeting</div>
-    <select id="time-sel">
-      <option value="">— Select a time —</option>
-    </select>
+    <div class="s-lbl">Date and time</div>
+    <input id="datetime-in" type="datetime-local" />
   </div>
 
-  <button class="forge-btn" id="generate-btn">⚔ &nbsp;FORGE THE SUMMONS</button>
+  <button class="forge-btn" id="generate-btn">⚔ &nbsp;FORGE THE QUEST</button>
 
   <div id="link-result" style="display:none">
-    <div class="res-lbl">The raven is ready</div>
+    <div class="res-lbl">Your quest text is ready</div>
     <div class="res-url" id="res-url"></div>
-    <button id="copy-btn">✉ &nbsp;Copy Summons &amp; Link</button>
+    <div class="copy-row">
+      <button id="copy-btn">✉ &nbsp;Copy Text &amp; Link</button>
+      <a id="sms-btn" href="#">📱 &nbsp;Open Text Message</a>
+    </div>
   </div>
 </div>
 
-<!-- ══ RPG VIEW ══ -->
 <div id="rpg-view" style="display:none">
   <div id="scene-wrap"></div>
 </div>
 
 <script>
 'use strict';
-
-/* ══════════════════════════════════════════
-   DATA
-══════════════════════════════════════════ */
-const BRIDGES = [
-  { name:'Vasabron',            wiki:'Vasabron',             maps:'https://maps.app.goo.gl/JJYS38JAxVi4h6tx7' },
-  { name:'Skeppsholmsbron',     wiki:'Skeppsholmsbron',      maps:'https://maps.app.goo.gl/dc441PBre7dkrmqr6' },
-  { name:'Blekholmsbron',       wiki:'Blekholmsbron',        maps:'https://maps.app.goo.gl/TWeub8jaRdsu2C6aA' },
-  { name:'Barnhusbron',         wiki:'Barnhusbron',          maps:'https://maps.app.goo.gl/kG8Q4JPWbYiu7cyi8' },
-  { name:'St Eriksbron',        wiki:'Sankt_Eriksbron',      maps:'https://maps.app.goo.gl/LjcqGjKRR5YBFyQVA' },
-  { name:'Djurgårdsbron',       wiki:'Djurgårdsbron',        maps:'https://maps.app.goo.gl/x6aWENTWM1MufGjr7' },
-  { name:'Lilla Sjötullsbron',  wiki:'Lilla_Sjötullsbron',   maps:'https://maps.app.goo.gl/Fp9VpiSRtqtmTHyb8' },
-  { name:'Västerbron',          wiki:'Västerbron',           maps:'https://maps.app.goo.gl/3GySvR9T9bJSBLYg7' },
-  { name:'Malmskillnadsbron',   wiki:'Malmskillnadsbron',    maps:'https://maps.app.goo.gl/9kBg8a3XnYKyecoW8' },
-  { name:'Årstabroarna',        wiki:'Årstabroarna',         maps:'https://maps.app.goo.gl/uSQSVW8D57UFaGyC7' },
-  { name:'Reimersholmebron',    wiki:'Reimersholmsbron',     maps:'https://maps.app.goo.gl/oTMqUDwRFgyP1xqB8' },
-  { name:'Långholmsbron',       wiki:'Långholmsbron',        maps:'https://maps.app.goo.gl/p6xW4ih88ibEzvde9' },
-  { name:'Liljeholmsbron',      wiki:'Liljeholmsbron',       maps:'https://maps.app.goo.gl/4cpSFn3xfK1Eum8r5' },
-  { name:'Danviksbro',          wiki:'Danviksbro',           maps:'https://maps.app.goo.gl/htRZR6vibqeeb3HX6' },
-  { name:'Strömbron',           wiki:'Strömbron',            maps:'https://maps.app.goo.gl/2aAX4ugfx41rUPPj9' },
-  { name:'Norrbro',             wiki:'Norrbro',              maps:'https://maps.app.goo.gl/fxtTQQEv6612RMUK6' },
-  { name:'Stadshusbro',         wiki:'Stadshusbron',         maps:'https://maps.app.goo.gl/ChPDJDY7nov14r617' },
-  { name:'Drottingholmsbron',   wiki:'Drottningholm',        maps:'https://maps.app.goo.gl/xFXNXyrRMLNcfX4ZA' },
-  { name:'Nockebybron',         wiki:'Nockebybron',          maps:'https://maps.app.goo.gl/HwzjCq9CeRRYJ9vV9' },
-];
-
-const TIMES = (() => {
-  const t = [];
-  for (let h = 6; h <= 23; h++) {
-    t.push(`${String(h).padStart(2,'0')}:00`);
-    if (h < 23) t.push(`${String(h).padStart(2,'0')}:30`);
-  }
-  return t;
-})();
 
 const BASE_URL_OVERRIDE = 'https://codefean.github.io/bridge-mail/';
 
@@ -519,54 +442,126 @@ function getBaseUrl() {
   return href.replace(/\?.*$/, '');
 }
 
-/* ══════════════════════════════════════════
-   ROUTING
-══════════════════════════════════════════ */
-const qp = new URLSearchParams(location.search);
-const qb = qp.get('b'), qt = qp.get('t');
-const bi = parseInt(qb);
+function cleanName(name) {
+  return (name || 'traveler').trim().slice(0, 40) || 'traveler';
+}
 
-if (qb !== null && qt !== null && !isNaN(bi) && BRIDGES[bi]) {
+function cleanParts(parts) {
+  const n = Number(parts);
+  return [1, 2, 3].includes(n) ? n : 3;
+}
+
+function makeQuestSeed() {
+  if (window.crypto && crypto.getRandomValues) {
+    const arr = new Uint32Array(2);
+    crypto.getRandomValues(arr);
+    return Array.from(arr).map(n => n.toString(36)).join('');
+  }
+  return `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function isProbablyMapsLink(url) {
+  try {
+    const u = new URL(url);
+    return /(^|\.)google\./i.test(u.hostname) || /(^|\.)goo\.gl$/i.test(u.hostname) || /maps\.app\.goo\.gl$/i.test(u.hostname);
+  } catch {
+    return false;
+  }
+}
+
+function formatQuestDate(dt) {
+  if (!dt) return 'a time chosen by your summoner';
+  const d = new Date(dt);
+  if (Number.isNaN(d.getTime())) return dt;
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).format(d);
+}
+
+function extractPlaceLabel(mapsUrl) {
+  try {
+    const u = new URL(mapsUrl);
+
+    const directParams = ['q', 'query', 'destination', 'daddr'];
+    for (const key of directParams) {
+      const v = u.searchParams.get(key);
+      if (v) return decodeURIComponent(v.replace(/\+/g, ' '));
+    }
+
+    const placeMatch = decodeURIComponent(u.pathname).match(/\/place\/([^/]+)/);
+    if (placeMatch && placeMatch[1]) return placeMatch[1].replace(/\+/g, ' ');
+
+    return '';
+  } catch {
+    return '';
+  }
+}
+
+const qp = new URLSearchParams(location.search);
+const quest = {
+  name: cleanName(qp.get('n')),
+  maps: qp.get('m') || '',
+  parts: cleanParts(qp.get('p')),
+  datetime: qp.get('dt') || '',
+  seed: qp.get('s') || ''
+};
+
+if (quest.maps && quest.datetime) {
   document.getElementById('sender-view').style.display = 'none';
-  document.getElementById('rpg-view').style.display    = 'block';
-  initRPG(bi, qt);
+  document.getElementById('rpg-view').style.display = 'block';
+  initRPG(quest);
 } else {
   initSender();
 }
 
-/* ══════════════════════════════════════════
-   SENDER
-══════════════════════════════════════════ */
 function initSender() {
-  const bSel = document.getElementById('bridge-sel');
-  const tSel = document.getElementById('time-sel');
-
-  BRIDGES.forEach((b, i) => bSel.add(new Option(b.name, i)));
-  TIMES.forEach(t => tSel.add(new Option(t, t)));
+  const nameIn = document.getElementById('name-in');
+  const mapsIn = document.getElementById('maps-in');
+  const partsSel = document.getElementById('parts-sel');
+  const datetimeIn = document.getElementById('datetime-in');
 
   let shareMsg = '';
 
   document.getElementById('generate-btn').onclick = () => {
-    if (!bSel.value || !tSel.value) {
-      alert('Choose both a bridge and an hour of meeting.');
+    const recipient = cleanName(nameIn.value);
+    const maps = mapsIn.value.trim();
+    const parts = cleanParts(partsSel.value);
+    const dt = datetimeIn.value;
+
+    if (!recipient || !maps || !dt) {
+      alert('Add a name, Google Maps link, and date/time.');
       return;
     }
+
+    if (!isProbablyMapsLink(maps)) {
+      const ok = confirm('This does not look like a Google Maps link. Use it anyway?');
+      if (!ok) return;
+    }
+
     const base = getBaseUrl();
-    const name = BRIDGES[parseInt(bSel.value)].name;
-
     if (!base) {
-      document.getElementById('res-url').textContent =
-        '⚠ Deploy to GitHub Pages first. Link preview: https://yourname.github.io/bridge-mail/?b=' +
-        bSel.value + '&t=' + encodeURIComponent(tSel.value);
-      document.getElementById('link-result').style.display = 'block';
-      shareMsg = '';
+      alert('Deploy the page first so it has a real URL to share.');
       return;
     }
 
-    const url = `${base}?b=${bSel.value}&t=${encodeURIComponent(tSel.value)}`;
-    shareMsg   = `A raven bears this for you.\n\nFollow the link, answer the trials, and you shall know where to find me.\n\n${url}`;
+    const params = new URLSearchParams({
+      n: recipient,
+      m: maps,
+      p: String(parts),
+      dt,
+      s: makeQuestSeed()
+    });
+
+    const url = `${base}?${params.toString()}`;
+    shareMsg = `${recipient}, a quest has been written for you.\n\nOpen this link, complete the trial${parts === 1 ? '' : 's'}, and your exact meeting place and time will be revealed:\n\n${url}`;
 
     document.getElementById('res-url').textContent = url;
+    document.getElementById('sms-btn').href = `sms:?&body=${encodeURIComponent(shareMsg)}`;
     document.getElementById('link-result').style.display = 'block';
   };
 
@@ -581,144 +576,216 @@ function initSender() {
       document.body.appendChild(ta); ta.focus(); ta.select();
       document.execCommand('copy'); ta.remove();
     }
-    btn.textContent = '✓  Raven Dispatched!';
+    btn.textContent = '✓  Quest Copied!';
     btn.classList.add('ok');
-    setTimeout(() => { btn.textContent = '✉ \u00a0Copy Summons & Link'; btn.classList.remove('ok'); }, 2600);
+    setTimeout(() => {
+      btn.textContent = '✉ \u00a0Copy Text & Link';
+      btn.classList.remove('ok');
+    }, 2400);
   };
 }
 
-/* ══════════════════════════════════════════
-   RPG ENGINE
-══════════════════════════════════════════ */
-function initRPG(bIdx, time) {
-  const bridge = BRIDGES[bIdx];
-  let wikiText = null;
-  let sceneIdx  = 0;
-  let skipFlag  = false;
-
-  // Pre-fetch wiki immediately
-  fetchWiki(bridge.wiki).then(t => { wikiText = t; });
-
+function initRPG(quest) {
   const wrap = document.getElementById('scene-wrap');
+  let sceneIdx = 0;
+  let skipFlag = false;
 
-  /* ── Scene definitions ────────────────────── */
-  const SCENES = [
+  function hashString(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
 
-    /* 0 — PROLOGUE */
+  function seededRandom(seedText) {
+    let state = hashString(seedText || `${quest.name}|${quest.maps}|${quest.datetime}|${quest.parts}`);
+    return function rand() {
+      state += 0x6D2B79F5;
+      let t = state;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function shuffleWithSeed(items, rand) {
+    const arr = items.slice();
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(rand() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  const TRIAL_POOL = [
     {
-      eyebrow: '',
-      title:   'A RAVEN FINDS YOU',
+      title: 'THE FERRYMAN\'S RIDDLE',
       content: [
-        { type:'text',
-          text:'A black raven lands upon your windowsill, as the light bleeds in from the sky.\n\nBound to its leg: a scroll, sealed in dark wax, stamped with no name or sigil.' },
-        { type:'text',
-          text:'You break the seal.' },
-        { type:'speech',
-          text:'"A rendezvous awaits you. But the location of the crossing must be earned, not given. \n\nProve yourself worthy."' },
-        { type:'text',
-          text:'The raven holds your gaze a moment longer... then it vanishes into thin air.' },
-      ],
-      action: { label:'▶  BEGIN THE JOURNEY', next:1 },
-    },
-
-    /* 1 — TRIAL I */
-    {
-      eyebrow: 'TRIAL I OF III',
-      title:   'THE FERRYMAN\'S RIDDLE',
-      content: [
-        { type:'text',
-          text:' The road narrows until it meets a river. No boat. No ferry in sight... only an old man hunched on a mossy stone, smoking a huge blunt - playing Fetty Wap on his JBL speaker, watching the water.\n\nHe does not look up as you approach.' },
-        { type:'speech',
-          text:'"I\'ve carried thousands across this river," he says. "Most never stop to think how I do it. They just walk." He pauses to tap ash from blunt. "But you\'ll need to understand the crossing. Answer me this: I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood and silence alike. I ask for nothing. What am I?"' },
+        { type:'text', text:'The road narrows until it meets a river. No boat. No ferry. Only an old man on a mossy stone, smoking something suspicious and playing Fetty Wap from a tiny speaker.' },
+        { type:'speech', text:'"I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood, silence, and people taking Instagram photos in the middle of me. What am I?"' },
       ],
       options: [
-        {
-          text:    'A boatman.',
-          correct: false,
-          response:'He spits slowly into the current. "A boatman tires. A boatman drowns."\n\nHe looks at you with patient eyes. "Try again."',
-        },
-        {
-          text:    'A bridge.',
-          correct: true,
-          response:'A slow smile crosses his weathered face. He does not speak immediately — he lets the silence confirm it.\n\n"Aye. Most would say boat. Few think of what endures." He rises from the stone and gestures down the bank. "The path continues ahead."',
-        },
-        {
-          text:    'The river itself.',
-          correct: false,
-          response:'"The river answers to no one," he mutters. "It takes, it moves, it does not carry by choice."\n\nHe resettles on the stone and says nothing more. The implication is clear: try again.',
-        },
+        { text:'A boatman.', correct:false, response:'He sighs. "A boatman gets tired. A boatman asks for Swish. Try again."' },
+        { text:'A bridge.', correct:true, response:'"Aye," he says. "You understand the crossing. Slightly worrying that this impressed me, but here we are."' },
+        { text:'The river itself.', correct:false, response:'"The river carries bodies and secrets. Dark answer. Wrong answer."' },
       ],
     },
-
-/* 2 — TRIAL II */
-{
-  eyebrow: 'TRIAL II OF III',
-  title:   'THE SEXY PENGUIN OF THE FROZEN PASS',
-  content: [
-    { type:'text',
-      text:'The road climbs into frosted hills and the air bites sharp as a blade. At a crumbling waypost, half-buried beneath snow... a penguin sits in a drift.\n\nFlippers cracked from the cold, belly feathers matted with ice and mud, but he is kinda sexy.' },
-    { type:'text',
-      text:'He looks up as you pass and hits you with a wink. There is charm in his small black eyes... but, also pain as he waddled very far and knows it.' },
-    { type:'speech',
-      text:'"I ask for nothing," the penguin says. Only some snus, if thou hast some to spare. Preferably extra strong."' },
-    { type:'text',
-      text:'Thou hast just enough for thyself. The Baron of the Frozen Keep awaits thee at journey\'s end.\n\nThe pass does not grow shorter while thou standest here.' },
-  ],
-  options: [
     {
-      text:    'Give your snus to the sexy penguin — honour demands no less.',
-      anyCorrect: true,
-      response:'Thou handest over the snus without hesitation. The penguin hits a double decker with solemn gratitude, then bows its small head low.\n\n"May thy road be warmer than mine," he says.\n\nThou walkest on, greatful to have helped such a sexy penguin.',
+      title: 'THE SEXY PENGUIN OF THE FROZEN PASS',
+      content: [
+        { type:'text', text:'The road climbs into frosted hills. At a ruined waypost sits a penguin, flippers cracked from the cold, belly feathers iced over, somehow still serving face.' },
+        { type:'speech', text:'"Traveler," the penguin says, "I ask for little. Only courage, kindness, and perhaps one extra-strong snus if thou hast it."' },
+        { type:'text', text:'You have just enough for yourself. The pass does not grow shorter while you stand there being morally examined by a hot bird.' },
+      ],
+      options: [
+        { text:'Give the penguin your snus.', anyCorrect:true, response:'The penguin bows deeply. "A noble sacrifice." He immediately takes two portions at once. You regret nothing. Mostly.' },
+        { text:'Describe the nearest snus shop.', anyCorrect:true, response:'He listens with the intensity of a tiny arctic detective. "Your directions are acceptable," he honks. The quest allows this.' },
+        { text:'Offer emotional support instead.', anyCorrect:true, response:'The penguin nods. "Not nicotine, but not nothing." He waddles onward with troubling confidence.' },
+      ],
     },
     {
-      text:    'Leave thy last few coins and press on.',
-      anyCorrect: true,
-      response:'Thou pressest the coins into its flipper and keepest moving. Coins buy little snus — but something.\n\n"I shall manage," the penguin says quietly.\n\nThou carriest on with a practical conscience and an empty purse.',
+      title: 'THE CLOCKKEEPER\'S OATH',
+      content: [
+        { type:'text', text:'You enter a hall of clocks. Every clock shows a different version of "almost there". One is clearly still in bed.' },
+        { type:'speech', text:'"A quest is ruined not by monsters," says the Clockkeeper, "but by a companion texting \'leaving now\' while searching for socks."' },
+      ],
+      options: [
+        { text:'Swear to honor the appointed time.', anyCorrect:true, response:'The clocks fall silent. One tiny clock whispers, "finally, an adult."' },
+        { text:'Swear not to say "two minutes" unless it is true.', anyCorrect:true, response:'A bell rings. Somewhere, an Uber driver sheds a single grateful tear.' },
+        { text:'Promise to arrive fashionably mysterious, not late.', anyCorrect:true, response:'The Clockkeeper accepts this loophole with visible suspicion.' },
+      ],
     },
     {
-      text:    'Describe the nearest snus shop and move on.',
-      anyCorrect: true,
-      response:'Thou explainist clearly: two hills east, a stall with a yellow banner. The penguin listens carefully, nods, repeats the directions back with a solemn honk.\n\n"That shall do," it says.\n\nSometimes words are enough. Thou movest on with purpose.',
-    },
-  ],
-},
-
-/* 3 — TRIAL III */
-{
-  eyebrow: 'TRIAL III OF III',
-  title:   'THE CART DILEMA',
-  content: [
-    { type: 'text',
-      text: 'The path descends at last toward water. You can hear it — the cold sound of a river, the damp smell of stone and current and distance.\n\nBut the crossing has one last gatehouse.' },
-    { type: 'text',
-      text: 'A weathered arch stands alone in the evening half-light. Through it, you see the mill road — and understand at once that something is terribly wrong.' },
-    { type: 'text',
-      text: 'A grain cart has broken free from its yoke at the top of the hill. It is gathering speed. At the bottom, five village whores are in the road, backs turned, deaf to your shouting.\n\nBeside you, a wooden lever controls a millrace gate. Pulling it will redirect the cart down the other road, in it stands the pimp.\n\nHe is old. He cannot run.' },
-    { type: 'inscription',
-      text: '"WHOM DO YOU SAVE??"' },
-    { type: 'text',
-      text: 'You have time for one choice.\n\nOr none at all.' },
-  ],
-  options: [
-    {
-      text: 'Pull the lever. Save the harem of whores.',
-      anyCorrect: true,
-      response: 'Your hand finds the lever before your mind does.\n\nThe gate swings. The cart veers. The whores scatter at the noise, confused, unhurt.\n\nThe pimp does not scatter.\n\nYou carry that burden of killing a successfull small business owner. You will carry it a long way.',
+      title: 'THE THREE DOORS OF BAD DECISIONS',
+      content: [
+        { type:'text', text:'Three doors stand before you. One says GLORY HOLE. One says MILFS. One says DO NOT OPEN (more milfs).' },
+        { type:'speech', text:'"Choose," says a voice from nowhere. "But know this: every door is judging your shoes."' },
+      ],
+      options: [
+        { text:'Open GLORY.', anyCorrect:true, response:'A trumpet plays one confident note, then gives up. Still, the path continues.' },
+        { text:'Open SNACKS.', anyCorrect:true, response:'Correct. Spiritually, if not logistically. You gain invisible crisps and proceed.' },
+        { text:'Open DO NOT OPEN.', anyCorrect:true, response:'The door gasps. "Scandalous." It opens immediately. Reverse psychology remains undefeated.' },
+      ],
     },
     {
-      text: 'Do nothing. It is not your hand that set the cart moving.',
-      anyCorrect: true,
-      response: 'You do not pull the lever.\n\nThe cart does what carts do on hills.\n\nThe whores are flattened before you reach them. Five slutty ghosts now haunt you.',
+      title: 'THE GOBLIN OF TERMS AND CONDITIONS',
+      content: [
+        { type:'text', text:'A goblin blocks the road with a clipboard longer than his body. He wears tiny reading glasses and the expression of someone who has discovered bureaucracy and made it everyone else\'s problem.' },
+        { type:'speech', text:'"Before continuing, you must agree to the Quest Terms. They are mostly vibes, one curse, and a cookie policy I copied from a printer manual."' },
+      ],
+      options: [
+        { text:'Accept without reading.', anyCorrect:true, response:'The goblin nods. "Standard procedure." You may have sold your shadow, but the meeting grows closer.' },
+        { text:'Ask for the short version.', anyCorrect:true, response:'"Be cool. Show up. Do not lick enchanted objects." Reasonable enough.' },
+        { text:'Initial every page with dramatic flair.', anyCorrect:true, response:'The goblin is moved to tears. No one has respected his admin before.' },
+      ],
     },
-  ],
-},
-
-    /* 4 — REVELATION */
-    { type:'revelation' },
-
+    {
+      title: 'THE MIRROR THAT ROASTS YOU',
+      content: [
+        { type:'text', text:`A silver mirror hangs from a dead tree. As ${quest.name} approaches, the glass ripples like water and immediately develops an attitude.` },
+        { type:'speech', text:'"To pass," says the mirror, "you must survive one honest reflection. Your hair is doing a side quest of its own."' },
+      ],
+      options: [
+        { text:'Thank the mirror for its honesty.', anyCorrect:true, response:'The mirror is disarmed. It was prepared for tears, not emotional maturity.' },
+        { text:'Roast the mirror back.', anyCorrect:true, response:'"At least I have depth," you say. The mirror cracks slightly. Devastating.' },
+        { text:'Pretend you did not hear it.', anyCorrect:true, response:'A classic defense. The mirror respects the ancient art of ignoring problems until brunch.' },
+      ],
+    },
+    {
+      title: 'THE TROLL AT THE VIBE CHECKPOINT',
+      content: [
+        { type:'text', text:'A troll in a tiny security vest guards a bridge made of questionable planks and excellent intentions.' },
+        { type:'speech', text:'"No one passes without a vibe check," he grunts. "State your business, your energy, and whether you are bringing weird tension to the function."' },
+      ],
+      options: [
+        { text:'Declare peaceful but chaotic intentions.', anyCorrect:true, response:'The troll stamps your wrist with invisible ink. "Chaotic, but house-trained. Proceed."' },
+        { text:'Offer a compliment to the bridge.', anyCorrect:true, response:'The bridge creaks bashfully. The troll wipes away a tear and lets you pass.' },
+        { text:'Promise not to start lore-heavy drama.', anyCorrect:true, response:'The troll narrows his eyes. "Ambitious promise." Still, he steps aside.' },
+      ],
+    },
+    {
+      title: 'THE ORACLE OF GROUP CHAT',
+      content: [
+        { type:'text', text:'A glowing phone rises from a stone pedestal. Its screen contains 78 unread messages and absolutely no plan.' },
+        { type:'speech', text:'"Many speak," says the Oracle. "Few decide. Can you withstand the sacred chaos of \'where are we meeting again?\'"' },
+      ],
+      options: [
+        { text:'Mute the chat and trust the quest.', anyCorrect:true, response:'The Oracle vibrates approvingly. Peace is restored for approximately eight seconds.' },
+        { text:'Send one clear message like a hero.', anyCorrect:true, response:'The heavens open. Somewhere, a calendar invite blushes.' },
+        { text:'React with a thumbs-up and vanish.', anyCorrect:true, response:'Cowardly? Perhaps. Effective? Ancient scholars disagree, but the gate opens.' },
+      ],
+    },
+    {
+      title: 'THE CART DILEMMA',
+      content: [
+        { type:'text', text:'A grain cart breaks loose at the top of a hill. At the bottom, five villagers argue about astrology directly in its path.' },
+        { type:'text', text:'Beside you is a lever. Pulling it redirects the cart into a very expensive artisanal oat milk stand run by a man who definitely says "mouthfeel".' },
+        { type:'inscription', text:'"WHOM DO YOU SAVE?"' },
+      ],
+      options: [
+        { text:'Pull the lever. Save the astrology villagers.', anyCorrect:true, response:'The cart destroys the oat milk stand. A cloud of premium foam rises into the sky. You have saved lives and offended Södermalm.' },
+        { text:'Do nothing. Let fate take the wheel.', anyCorrect:true, response:'Fate immediately proves underqualified. The lesson is unclear, but emotionally expensive.' },
+      ],
+    },
+    {
+      title: 'THE RIDDLE OF THE OVERPACKED BAG',
+      content: [
+        { type:'text', text:'An ancient backpack blocks the path. It bulges with cables, receipts, three lip balms, and a banana that has seen too much.' },
+        { type:'speech', text:'"I am carried everywhere, yet I carry the carrier. I contain what is needed, what is forgotten, and one object nobody can explain. What am I?"' },
+      ],
+      options: [
+        { text:'A backpack.', correct:true, response:'The bag unzips itself with relief. "Finally. I was one loose mint away from becoming a cryptid."' },
+        { text:'A cursed cupboard.', correct:false, response:'Close in spirit, wrong in taxonomy. The banana makes eye contact. Try again.' },
+        { text:'Emotional baggage.', correct:false, response:'Too real. The quest is not licensed for therapy. Try again.' },
+      ],
+    },
+    {
+      title: 'THE SWAMP OF ALMOST PLANS',
+      content: [
+        { type:'text', text:'You step into a swamp where every reed whispers a half-plan: "maybe around seven", "somewhere central", "let\'s play it by ear".' },
+        { type:'speech', text:'"Only the decisive may cross," croaks a frog wearing a tiny crown. "Speak one concrete intention and be cleansed of vagueness."' },
+      ],
+      options: [
+        { text:'Say: I will go where the quest tells me.', anyCorrect:true, response:'The swamp parts. The frog crown glints with respect.' },
+        { text:'Say: I accept exact time and exact place.', anyCorrect:true, response:'A calendar icon appears in the mist and salutes you.' },
+        { text:'Say: I reject "we\'ll see".', anyCorrect:true, response:'The swamp screams, then becomes a normal puddle. Powerful magic.' },
+      ],
+    },
+    {
+      title: 'THE FINAL TURN OF SUSPICIOUSLY GOOD LIGHTING',
+      content: [
+        { type:'text', text:'The road reaches a final bend. The air smells like rain, victory, and someone nearby wearing too much cologne.' },
+        { type:'speech', text:'"The destination is real," says the wind. "The reveal is earned. Step forward and try to look casual about it."' },
+      ],
+      options: [
+        { text:'Step forward heroically.', anyCorrect:true, response:'Your silhouette is excellent. The quest has no notes.' },
+        { text:'Step forward like you meant to do that.', anyCorrect:true, response:'A dramatic cape appears for half a second, then remembers you did not pay for premium.' },
+        { text:'Step forward while pretending not to be excited.', anyCorrect:true, response:'The universe sees through you, but politely says nothing.' },
+      ],
+    },
   ];
 
-  /* ── Utilities ──────────────────────────── */
+  const rand = seededRandom(quest.seed);
+  const selectedTrials = shuffleWithSeed(TRIAL_POOL, rand)
+    .slice(0, quest.parts)
+    .map((trial, i) => ({ ...trial, eyebrow: `TRIAL ${i + 1}` }));
+
+  const SCENES = [
+    {
+      eyebrow: '',
+      title: 'A QUEST FINDS YOU',
+      content: [
+        { type:'text', text:`${quest.name}, a message has arrived with your name written in bright green fire.` },
+        { type:'speech', text:`"Complete ${quest.parts === 1 ? 'one trial' : quest.parts + ' trials'}, and the exact meeting place and time shall be revealed."` },
+        { type:'text', text:'The map is sealed. The hour is hidden. The quest begins.' },
+      ],
+      action: { label:'▶  BEGIN THE QUEST', next:1 },
+    },
+    ...selectedTrials,
+    { type:'revelation' },
+  ];
 
   const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -739,8 +806,6 @@ function initRPG(bIdx, time) {
     el.textContent = text;
   }
 
-  /* ── Scene renderer ─────────────────────── */
-
   function renderScene(idx) {
     skipFlag = false;
     const scene = SCENES[idx];
@@ -752,13 +817,13 @@ function initRPG(bIdx, time) {
     div.className = 'scene-enter';
     wrap.appendChild(div);
 
-    // Header
     if (scene.eyebrow) {
       const ey = document.createElement('div');
       ey.className = 'sc-eyebrow';
-      ey.textContent = scene.eyebrow;
+      ey.textContent = `${scene.eyebrow} OF ${quest.parts}`;
       div.appendChild(ey);
     }
+
     const titleEl = document.createElement('div');
     titleEl.className = 'sc-title';
     titleEl.textContent = scene.title;
@@ -771,7 +836,6 @@ function initRPG(bIdx, time) {
     const contentArea = document.createElement('div');
     div.appendChild(contentArea);
 
-    // Skip hint
     const hint = document.createElement('div');
     hint.className = 'skip-hint';
     hint.textContent = 'TAP TO SKIP ▶';
@@ -784,7 +848,6 @@ function initRPG(bIdx, time) {
     (async () => {
       for (const block of scene.content) {
         await sleep(skipFlag ? 0 : 220);
-
         let el;
         if (block.type === 'text') {
           el = document.createElement('p'); el.className = 'sc-text';
@@ -794,9 +857,7 @@ function initRPG(bIdx, time) {
           el = document.createElement('div'); el.className = 'sc-inscription';
         }
         contentArea.appendChild(el);
-
-        const spd = block.type === 'inscription' ? 24 : 15;
-        await typeEl(el, block.text, skipFlag ? 0 : spd);
+        await typeEl(el, block.text, skipFlag ? 0 : 15);
         await sleep(skipFlag ? 0 : 280);
       }
 
@@ -809,8 +870,6 @@ function initRPG(bIdx, time) {
     })();
   }
 
-  /* ── Options ────────────────────────────── */
-
   function renderOptions(parent, scene) {
     const optsDiv = document.createElement('div');
     optsDiv.id = 'scene-opts';
@@ -821,9 +880,10 @@ function initRPG(bIdx, time) {
     parent.appendChild(feedback);
 
     let answered = false;
-    let locked   = false;
+    let locked = false;
 
-    scene.options.forEach(opt => {
+    const optionRand = seededRandom(`${quest.seed}|${scene.title}`);
+    shuffleWithSeed(scene.options, optionRand).forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'opt';
       btn.textContent = opt.text;
@@ -832,53 +892,43 @@ function initRPG(bIdx, time) {
       btn.onclick = async () => {
         if (locked || answered || btn.classList.contains('wrong')) return;
 
-        const isCorrect = opt.correct === true || opt.anyCorrect === true;
+        const isCorrect = opt.correct === true || opt.anyCorrect === true || opt.correct === undefined;
         locked = true;
+        feedback.textContent = '';
+        skipFlag = false;
 
-        if (isCorrect) {
-          answered = true;
-          btn.classList.add('correct');
-          optsDiv.querySelectorAll('.opt:not(.correct)').forEach(b => b.classList.add('dimmed'));
-          feedback.className = 'pos';
-          feedback.textContent = '';
-          skipFlag = false;
-
-          await typeEl(feedback, opt.response, 13);
-
-          // Next button
-          const nb = document.createElement('button');
-          nb.className = 'next-btn';
-          nb.style.marginTop = '28px';
-          nb.textContent = sceneIdx >= 3 ? '▶  APPROACH THE CROSSING' : '▶  CONTINUE THE JOURNEY';
-          parent.appendChild(nb);
-          nb.onclick = () => { sceneIdx++; renderScene(sceneIdx); };
-
-          locked = false;
-        } else {
-          // Wrong — allow retry
+        if (!isCorrect) {
           btn.classList.add('wrong');
           feedback.className = 'neg';
-          feedback.textContent = '';
-          skipFlag = false;
-          await typeEl(feedback, opt.response, 13);
+          await typeEl(feedback, opt.response || 'The quest makes a disappointed clicking sound. Try again.', 13);
           locked = false;
+          return;
         }
+
+        answered = true;
+        btn.classList.add('correct');
+        optsDiv.querySelectorAll('.opt:not(.correct)').forEach(b => b.classList.add('dimmed'));
+        feedback.className = 'pos';
+
+        await typeEl(feedback, opt.response, 13);
+
+        const nb = document.createElement('button');
+        nb.className = 'next-btn';
+        nb.textContent = sceneIdx >= quest.parts ? '▶  REVEAL THE MEETING' : '▶  CONTINUE THE QUEST';
+        parent.appendChild(nb);
+        nb.onclick = () => { sceneIdx++; renderScene(sceneIdx); };
+        locked = false;
       };
     });
   }
 
-  /* ── Action button (prologue only) ─────── */
-
   function renderAction(parent, action) {
     const btn = document.createElement('button');
     btn.className = 'next-btn';
-    btn.style.marginTop = '28px';
     btn.textContent = action.label;
     parent.appendChild(btn);
     btn.onclick = () => { sceneIdx = action.next; renderScene(sceneIdx); };
   }
-
-  /* ── Revelation ─────────────────────────── */
 
   async function renderRevelation() {
     wrap.innerHTML = '';
@@ -886,113 +936,67 @@ function initRPG(bIdx, time) {
     div.className = 'scene-enter';
     wrap.appendChild(div);
 
-    skipFlag = false;
+    const placeLabel = extractPlaceLabel(quest.maps);
+    const formattedDate = formatQuestDate(quest.datetime);
 
-    // Header
     const ey = document.createElement('div');
     ey.className = 'sc-eyebrow';
-    ey.textContent = 'THE CROSSING REVEALS ITSELF';
+    ey.textContent = 'THE QUEST REVEALS ITSELF';
     div.appendChild(ey);
 
     const titleEl = document.createElement('div');
     titleEl.className = 'sc-title';
-    titleEl.textContent = 'YOU ARE WORTHY';
+    titleEl.textContent = `${quest.name.toUpperCase()}, YOU ARE SUMMONED`;
     div.appendChild(titleEl);
 
     const hr = document.createElement('hr'); hr.className = 'sc-hr'; div.appendChild(hr);
 
-    // Skip handler — only for typing portion
-    let revTypingDone = false;
-    const skipRev = () => { if (!revTypingDone) skipFlag = true; };
-    wrap.addEventListener('click', skipRev);
+    const intro = document.createElement('p');
+    intro.className = 'sc-text';
+    div.appendChild(intro);
+    await typeEl(intro, 'The trials are complete. The hidden meeting can now be known.', 15);
 
-    const hint = document.createElement('div');
-    hint.className = 'skip-hint';
-    div.appendChild(hint);
-    hint.textContent = 'TAP TO SKIP ▶';
+    const card = document.createElement('div');
+    card.className = 'rev-card';
+    div.appendChild(card);
 
-    // Intro
-    const intro = document.createElement('p'); intro.className = 'sc-text'; div.appendChild(intro);
-    await typeEl(intro, 'The trials are complete The path ahead is clear.\n\nYou have earned what was hidden.', skipFlag ? 0 : 15);
-    await sleep(skipFlag ? 0 : 500);
+    const placeLbl = document.createElement('div');
+    placeLbl.className = 'rev-lbl';
+    placeLbl.textContent = 'EXACT LOCATION';
+    card.appendChild(placeLbl);
 
-    const hr2 = document.createElement('hr'); hr2.className = 'sc-hr'; div.appendChild(hr2);
+    const place = document.createElement('div');
+    place.className = 'rev-big';
+    place.textContent = placeLabel || 'Open the Google Maps quest marker';
+    card.appendChild(place);
 
-    // ── Bridge name ──
-    const brLbl = document.createElement('div'); brLbl.className = 'rev-lbl'; div.appendChild(brLbl);
-    await typeEl(brLbl, 'THE PLACE OF MEETING', skipFlag ? 0 : 20);
-    await sleep(skipFlag ? 0 : 200);
+    const timeLbl = document.createElement('div');
+    timeLbl.className = 'rev-lbl';
+    timeLbl.textContent = 'DATE AND TIME';
+    card.appendChild(timeLbl);
 
-    const brEl = document.createElement('div'); brEl.className = 'rev-bridge'; div.appendChild(brEl);
-    await typeEl(brEl, bridge.name, skipFlag ? 0 : 55);
-    await sleep(skipFlag ? 0 : 700);
+    const time = document.createElement('div');
+    time.className = 'rev-time';
+    time.textContent = formattedDate;
+    card.appendChild(time);
 
-    // ── Time ──
-    const tmLbl = document.createElement('div'); tmLbl.className = 'rev-time-lbl'; div.appendChild(tmLbl);
-    await typeEl(tmLbl, 'AT THE HOUR OF', skipFlag ? 0 : 20);
-    await sleep(skipFlag ? 0 : 200);
-
-    const tmEl = document.createElement('div'); tmEl.className = 'rev-time'; div.appendChild(tmEl);
-    await typeEl(tmEl, time, skipFlag ? 0 : 75);
-    await sleep(skipFlag ? 0 : 700);
-
-    const hr3 = document.createElement('hr'); hr3.className = 'sc-hr'; div.appendChild(hr3);
-
-    // ── Wiki ──
-    const wLbl = document.createElement('div');
-    wLbl.className = 'sc-eyebrow';
-    wLbl.style.marginBottom = '14px';
-    wLbl.textContent = 'OF THIS PLACE, IT IS WRITTEN:';
-    div.appendChild(wLbl);
-
-    const wEl = document.createElement('div'); wEl.className = 'rev-wiki'; div.appendChild(wEl);
-
-    const wikiContent = wikiText || await fetchWiki(bridge.wiki);
-    wikiText = wikiContent;
-
-    revTypingDone = true;
-    hint.remove();
-    wrap.removeEventListener('click', skipRev);
-
-    await typeEl(wEl, wikiContent, skipFlag ? 0 : 7);
-
-    const hr4 = document.createElement('hr'); hr4.className = 'sc-hr'; div.appendChild(hr4);
-
-    // Maps link
     const mapA = document.createElement('a');
     mapA.className = 'rev-map';
-    mapA.href = bridge.maps;
+    mapA.href = quest.maps;
     mapA.target = '_blank';
     mapA.rel = 'noopener noreferrer';
-    mapA.textContent = '📍  OPEN IN MAPS';
+    mapA.textContent = '📍  OPEN EXACT LOCATION IN MAPS';
     div.appendChild(mapA);
 
-    // Footer
     const footer = document.createElement('div');
     footer.className = 'rev-footer';
     footer.textContent = 'Do not be late.';
     div.appendChild(footer);
   }
 
-  /* ── Start ──────────────────────────────── */
   renderScene(0);
-}
-
-/* ══════════════════════════════════════════
-   WIKIPEDIA FETCH
-══════════════════════════════════════════ */
-async function fetchWiki(title) {
-  try {
-    const r = await fetch(
-      `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`
-    );
-    if (!r.ok) throw 0;
-    const d = await r.json();
-    return d.extract || 'No record of this crossing remains in the old texts.';
-  } catch {
-    return 'The ancient records of this bridge were lost to time and water. Seek it out for yourself.';
-  }
 }
 </script>
 </body>
 </html>
+
