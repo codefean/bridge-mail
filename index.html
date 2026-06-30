@@ -436,10 +436,10 @@
 const BASE_URL_OVERRIDE = 'https://codefean.github.io/bridge-mail/';
 
 function getBaseUrl() {
-  if (BASE_URL_OVERRIDE) return BASE_URL_OVERRIDE.replace(/\?.*$/, '').replace(/\/$/, '');
+  if (BASE_URL_OVERRIDE) return BASE_URL_OVERRIDE.replace(/[?#].*$/, '');
   const href = location.href;
   if (href.startsWith('about:') || href.startsWith('blob:')) return null;
-  return href.replace(/\?.*$/, '');
+  return href.replace(/[?#].*$/, '');
 }
 
 function cleanName(name) {
