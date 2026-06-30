@@ -558,7 +558,7 @@ function initSender() {
     });
 
     const url = `${base}?${params.toString()}`;
-    shareMsg = `${recipient}, a quest has been written for you.\n\nOpen this link, complete the trial${parts === 1 ? '' : 's'}, and your exact meeting place and time will be revealed:\n\n${url}`;
+    shareMsg = `${recipient}, a quest has been written for you.\n\nOpen this link, complete the trial${parts === 1 ? '' : 's'}, and a place and time for a date will be revealed:\n\n${url}`;
 
     document.getElementById('res-url').textContent = url;
     document.getElementById('sms-btn').href = `sms:?&body=${encodeURIComponent(shareMsg)}`;
@@ -623,13 +623,13 @@ function initRPG(quest) {
     {
       title: 'THE TOLLKEEPER RAT OF THE BLACK RIVER',
       content: [
-        { type:'text', text:'The road narrows until it meets a black, sluggish river. No boat. No ferry. Only an ancient rat in a tattered friar\'s robe, perched on a barrel, gnawing thoughtfully on a candle stub.' },
+        { type:'text', text:'The road narrows until it meets a black, sluggish river. No boat. No ferry. Only an ancient rat in a tattered friar\'s robe, perched on a barrel, gnawing thoughtfully on a candle stub. He is blasting Fetty Wap on a JBL speaker.' },
         { type:'speech', text:'"I stand between two shores, holding nothing in my paws, yet I carry all who cross. I endure flood, fog, plague rumors, and the occasional knight who forgets I exist. What am I?"' },
       ],
       options: [
-        { text:'A ferry.', correct:false, response:'He bares his teeth. "Nah dawg that aint it. Try again."' },
+        { text:'A ferry.', correct:false, response:'He bares his teeth. "Nah that aint it. Try again."' },
         { text:'A bridge.', correct:true, response:'"Just so," he squeaks. "You grasp the crossing. Mildly unsettling that a mortal managed it, but proceed."' },
-        { text:'The river itself.', correct:false, response:'"The river hides bones and grudges. A grim guess. Wrong."' },
+        { text:'The river itself.', correct:false, response:'"A grim guess. Wrong."' },
       ],
     },
     {
@@ -640,33 +640,21 @@ function initRPG(quest) {
         { type:'text', text:'You have barely enough for yourself. The moat does not thaw while you stand there being morally examined by an armored rodent.' },
       ],
       options: [
-        { text:'Give the rat knight your dried meat.', anyCorrect:true, response:'The knight salutes with his tiny sword. "A noble sacrifice." He devours it in one motion and stands taller. You regret nothing. Mostly.' },
-        { text:'Point him toward the castle kitchens.', anyCorrect:true, response:'He listens with the focus of a battle-hardened scout. "Acceptable intelligence," he squeaks. The quest allows this.' },
-        { text:'Offer him words of encouragement instead.', anyCorrect:true, response:'The knight nods solemnly. "Not meat, but not nothing." He marches onward with troubling confidence.' },
-      ],
-    },
-    {
-      title: 'THE WITCH OF THE CROOKED HOURGLASS',
-      content: [
-        { type:'text', text:'You enter a crumbling tower lined with hourglasses, each one running at a different speed. One has clearly given up entirely.' },
-        { type:'speech', text:'"A quest is ruined not by curses," says the lesbian witch, stirring a cauldron that smells faintly of rat fur and burnt thyme, "but by a companion saying \'five more minutes\' while hunting for their cloak."' },
-      ],
-      options: [
-        { text:'Swear to honor the appointed hour.', anyCorrect:true, response:'The hourglasses still themselves. One tiny grain of sand whispers, "finally, someone reliable."' },
-        { text:'Swear never to say "almost there" falsely.', anyCorrect:true, response:'The cauldron bubbles approvingly. Somewhere, a raven sheds a single grateful tear.' },
-        { text:'Vow to arrive mysteriously on time.', anyCorrect:true, response:'The witch accepts this loophole with visible suspicion, eyeing you over her crooked spectacles.' },
+        { text:'Give the rat knight your dried meat that may or may not be poisoned.', anyCorrect:true, response:'The knight salutes with his tiny sword. "Thanks big dawg." He devours it in one motion and then dies. You regret nothing.' },
+        { text:'Point him toward the Hornstull ICA.', anyCorrect:true, response:'He listens with the focus of a battle-hardened scout. "Acceptable intelligence," he squeaks. The quest allows this.' },
+        { text:'Play him the new Drake album as encouragement.', anyCorrect:true, response:'The knight nods solemnly. "Not meat, but not nothing." He marches onward with troubling confidence.' },
       ],
     },
     {
       title: 'THE THREE PORTALS OF THE HAUNTED FOREST',
       content: [
-        { type:'text', text:'Three shimmering portals stand among the rotted trees. One hums with pale green light. One drips something that might be ichor. One is simply labeled, in claw-scratched runes, DO NOT.' },
-        { type:'speech', text:'"Choose," whispers a voice (that sounds like Joseph Stalin) from the canopy. "But know this: every portal is judging the state of your boots."' },
+        { type:'text', text:'Three shimmering portals stand among the rotted trees. },
+        { type:'speech', text:'"Choose," whispers a voice (that sounds like Joseph Stalin) from the canopy. "But know this: many penguins lay two eggs, one small one and one larger one. But, this has nothing to do with the portals, I just like penguins."' },
       ],
       options: [
         { text:'Step through the "my parents are in a healthy loving relationship" portal.', anyCorrect:true, response:'You hear a chorus of people sing, "we don´t care". The path continues.' },
         { text:'Step through the "adandonment issues" portal.', anyCorrect:true, response:'Correct, somehow. You hear the faint whisper of a father figure, and proceed.' },
-        { text:'Step through the "I have IBS" portal.', anyCorrect:true, response:'The runes gasp. "we all could tell." The portal opens immediately. Reverse psychology remains undefeated, even in a haunted forest.' },
+        { text:'Step through the "I have IBS" portal.', anyCorrect:true, response:'The runes gasp. "we all could smell that." The portal opens immediately. Reverse psychology remains undefeated, even in a haunted forest.' },
       ],
     },
     {
@@ -676,33 +664,9 @@ function initRPG(quest) {
         { type:'speech', text:'"Before continuing, you must agree to the Terms of Passage. They are mostly curses, one binding oath, and a clause about not being a horse girl."' },
       ],
       options: [
-        { text:'Sign without reading.', anyCorrect:true, response:'The goblin nods. "Standard procedure." You may have sold your shadow, but the haunted forest grows shorter ahead.' },
-        { text:'Ask for the short version.', anyCorrect:true, response:'"Be brave. Show up. Do not lick cursed relics or peoples boyfriends." Reasonable enough, even by witch-court standards.' },
+        { text:'Sign without reading.', anyCorrect:true, response:'The goblin nods. "Standard procedure." You may have sold the rights to your OnlyFans, but the haunted forest grows shorter ahead.' },
+        { text:'Ask for the short version.', anyCorrect:true, response:'"Be brave. Show up. Do not suck on cursed relics or peoples boyfriends." Reasonable enough, even by witch-court standards.' },
         { text:'Sign each line with dramatic flourish.', anyCorrect:true, response:'The goblin is moved to tears. No one has respected his scrollwork before. He used to be in an abusive relationship with an italian man.' },
-      ],
-    },
-    {
-      title: 'THE TROLL AT THE WITCH-WARDED BRIDGE',
-      content: [
-        { type:'text', text:'A troll in a moth-eaten warden\'s sash guards a bridge strung with bones, charms, and one suspiciously cheerful rat skull.' },
-        { type:'speech', text:'"None pass without a curse check," he rumbles. "State your business, your intentions, and whether you\'re smuggling any forbidden hexes."' },
-      ],
-      options: [
-        { text:'Declare peaceful but chaotic intentions with your Hinge match.', anyCorrect:true, response:'The troll brands your wrist with invisible rune-ink. "Chaotic, but properly warded. Proceed."' },
-        { text:'Compliment the bridge\'s craftsmanship.', anyCorrect:true, response:'The bridge creaks bashfully. The troll wipes away a tear and steps aside.' },
-        { text:'Swear not to wake the rat skull or hurt your Hinge match Sean physically.', anyCorrect:true, response:'The troll narrows his eyes. "Ambitious promise." Still, he lets you pass.' },
-      ],
-    },
-    {
-      title: 'THE ORACLE RAT OF TANGLED WHISKERS',
-      content: [
-        { type:'text', text:'A glowing rat skull rises from a mossy altar, whiskers crackling with faint blue sparks. It has clearly been listening to too many conflicting prophecies (Fox News).' },
-        { type:'speech', text:'"Many squeak," says the Oracle. "Few decide. Can you withstand the sacred chaos of \'where does the haunted path even begin\'?"' },
-      ],
-      options: [
-        { text:'Silence the chatter and trust the quest.', anyCorrect:true, response:'The skull hums approvingly. Peace is restored for approximately eight seconds.' },
-        { text:'Declare one clear destination (Cleveand, Ohio) like a true hero.', anyCorrect:true, response:'The fog parts overhead. Somewhere, a cursed map blushes.' },
-        { text:'Nod once, show your balls a little, and pass.', anyCorrect:true, response:'Illegal? Perhaps. Effective? Ancient scholars disagree, but the path opens.' },
       ],
     },
     {
@@ -741,7 +705,7 @@ function initRPG(quest) {
       eyebrow: '',
       title: 'A QUEST FINDS YOU',
       content: [
-        { type:'text', text:`${quest.name}, a message has arrived with your name written in bright green fire.` },
+        { type:'text', text:`${quest.name}, a message has arrived for you from the Rat King.` },
         { type:'speech', text:`"Complete ${quest.parts === 1 ? 'one trial' : quest.parts + ' trials'}, and the exact meeting place and time shall be revealed."` },
         { type:'text', text:'The map is sealed. The hour is hidden. The quest begins.' },
       ],
