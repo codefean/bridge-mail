@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <title>YOUVE BEEN SUMMONED</title>
+  <title>YOUVE BEEN SUMMONED BY THE RAT KING</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
@@ -621,148 +621,112 @@ function initRPG(quest) {
 
   const TRIAL_POOL = [
     {
-      title: 'THE FERRYMAN\'S RIDDLE',
+      title: 'THE TOLLKEEPER RAT OF THE BLACK RIVER',
       content: [
-        { type:'text', text:'The road narrows until it meets a river. No boat. No ferry. Only an old man on a mossy stone, smoking something suspicious and playing Fetty Wap from a tiny speaker.' },
-        { type:'speech', text:'"I stand between two shores, holding nothing in my hands, yet I carry all who cross. I endure storm, flood, silence, and people taking Instagram photos in the middle of me. What am I?"' },
+        { type:'text', text:'The road narrows until it meets a black, sluggish river. No boat. No ferry. Only an ancient rat in a tattered friar\'s robe, perched on a barrel, gnawing thoughtfully on a candle stub.' },
+        { type:'speech', text:'"I stand between two shores, holding nothing in my paws, yet I carry all who cross. I endure flood, fog, plague rumors, and the occasional knight who forgets I exist. What am I?"' },
       ],
       options: [
-        { text:'A boatman.', correct:false, response:'He sighs. "A boatman gets tired. A boatman asks for Swish. Try again."' },
-        { text:'A bridge.', correct:true, response:'"Aye," he says. "You understand the crossing. Slightly worrying that this impressed me, but here we are."' },
-        { text:'The river itself.', correct:false, response:'"The river carries bodies and secrets. Dark answer. Wrong answer."' },
+        { text:'A ferry.', correct:false, response:'He bares his teeth. "Nah dawg that aint it. Try again."' },
+        { text:'A bridge.', correct:true, response:'"Just so," he squeaks. "You grasp the crossing. Mildly unsettling that a mortal managed it, but proceed."' },
+        { text:'The river itself.', correct:false, response:'"The river hides bones and grudges. A grim guess. Wrong."' },
       ],
     },
     {
-      title: 'THE SEXY PENGUIN OF THE FROZEN PASS',
+      title: 'THE RAT KNIGHT OF THE FROSTED MOAT',
       content: [
-        { type:'text', text:'The road climbs into frosted hills. At a ruined waypost sits a penguin, flippers cracked from the cold, belly feathers iced over, somehow still serving face.' },
-        { type:'speech', text:'"Traveler," the penguin says, "I ask for little. Only courage, kindness, and perhaps one extra-strong snus if thou hast it."' },
-        { type:'text', text:'You have just enough for yourself. The pass does not grow shorter while you stand there being morally examined by a hot bird.' },
+        { type:'text', text:'The road climbs toward a frozen moat. A small rat with ill-fitting armor stands guard, whiskers crusted with ice, somehow still standing at perfect attention.' },
+        { type:'speech', text:'"Traveler," the knight squeaks, "I ask for little. Only courage, kindness, and perhaps one strip of dried meat, if thou hast it. The cold gnaws as fiercely as I once did."' },
+        { type:'text', text:'You have barely enough for yourself. The moat does not thaw while you stand there being morally examined by an armored rodent.' },
       ],
       options: [
-        { text:'Give the penguin your snus.', anyCorrect:true, response:'The penguin bows deeply. "A noble sacrifice." He immediately takes two portions at once. You regret nothing. Mostly.' },
-        { text:'Describe the nearest snus shop.', anyCorrect:true, response:'He listens with the intensity of a tiny arctic detective. "Your directions are acceptable," he honks. The quest allows this.' },
-        { text:'Offer emotional support instead.', anyCorrect:true, response:'The penguin nods. "Not nicotine, but not nothing." He waddles onward with troubling confidence.' },
+        { text:'Give the rat knight your dried meat.', anyCorrect:true, response:'The knight salutes with his tiny sword. "A noble sacrifice." He devours it in one motion and stands taller. You regret nothing. Mostly.' },
+        { text:'Point him toward the castle kitchens.', anyCorrect:true, response:'He listens with the focus of a battle-hardened scout. "Acceptable intelligence," he squeaks. The quest allows this.' },
+        { text:'Offer him words of encouragement instead.', anyCorrect:true, response:'The knight nods solemnly. "Not meat, but not nothing." He marches onward with troubling confidence.' },
       ],
     },
     {
-      title: 'THE CLOCKKEEPER\'S OATH',
+      title: 'THE WITCH OF THE CROOKED HOURGLASS',
       content: [
-        { type:'text', text:'You enter a hall of clocks. Every clock shows a different version of "almost there". One is clearly still in bed.' },
-        { type:'speech', text:'"A quest is ruined not by monsters," says the Clockkeeper, "but by a companion texting \'leaving now\' while searching for socks."' },
+        { type:'text', text:'You enter a crumbling tower lined with hourglasses, each one running at a different speed. One has clearly given up entirely.' },
+        { type:'speech', text:'"A quest is ruined not by curses," says the lesbian witch, stirring a cauldron that smells faintly of rat fur and burnt thyme, "but by a companion saying \'five more minutes\' while hunting for their cloak."' },
       ],
       options: [
-        { text:'Swear to honor the appointed time.', anyCorrect:true, response:'The clocks fall silent. One tiny clock whispers, "finally, an adult."' },
-        { text:'Swear not to say "two minutes" unless it is true.', anyCorrect:true, response:'A bell rings. Somewhere, an Uber driver sheds a single grateful tear.' },
-        { text:'Promise to arrive fashionably mysterious, not late.', anyCorrect:true, response:'The Clockkeeper accepts this loophole with visible suspicion.' },
+        { text:'Swear to honor the appointed hour.', anyCorrect:true, response:'The hourglasses still themselves. One tiny grain of sand whispers, "finally, someone reliable."' },
+        { text:'Swear never to say "almost there" falsely.', anyCorrect:true, response:'The cauldron bubbles approvingly. Somewhere, a raven sheds a single grateful tear.' },
+        { text:'Vow to arrive mysteriously on time.', anyCorrect:true, response:'The witch accepts this loophole with visible suspicion, eyeing you over her crooked spectacles.' },
       ],
     },
     {
-      title: 'THE THREE DOORS OF BAD DECISIONS',
+      title: 'THE THREE PORTALS OF THE HAUNTED FOREST',
       content: [
-        { type:'text', text:'Three doors stand before you. One says GLORY HOLE. One says MILFS. One says DO NOT OPEN (more milfs).' },
-        { type:'speech', text:'"Choose," says a voice from nowhere. "But know this: every door is judging your shoes."' },
+        { type:'text', text:'Three shimmering portals stand among the rotted trees. One hums with pale green light. One drips something that might be ichor. One is simply labeled, in claw-scratched runes, DO NOT.' },
+        { type:'speech', text:'"Choose," whispers a voice (that sounds like Joseph Stalin) from the canopy. "But know this: every portal is judging the state of your boots."' },
       ],
       options: [
-        { text:'Open GLORY.', anyCorrect:true, response:'A trumpet plays one confident note, then gives up. Still, the path continues.' },
-        { text:'Open SNACKS.', anyCorrect:true, response:'Correct. Spiritually, if not logistically. You gain invisible crisps and proceed.' },
-        { text:'Open DO NOT OPEN.', anyCorrect:true, response:'The door gasps. "Scandalous." It opens immediately. Reverse psychology remains undefeated.' },
+        { text:'Step through the "my parents are in a healthy loving relationship" portal.', anyCorrect:true, response:'You hear a chorus of people sing, "we don´t care". The path continues.' },
+        { text:'Step through the "adandonment issues" portal.', anyCorrect:true, response:'Correct, somehow. You hear the faint whisper of a father figure, and proceed.' },
+        { text:'Step through the "I have IBS" portal.', anyCorrect:true, response:'The runes gasp. "we all could tell." The portal opens immediately. Reverse psychology remains undefeated, even in a haunted forest.' },
       ],
     },
     {
-      title: 'THE GOBLIN OF TERMS AND CONDITIONS',
+      title: 'THE GOBLIN SCRIBE OF THE RAT COURT',
       content: [
-        { type:'text', text:'A goblin blocks the road with a clipboard longer than his body. He wears tiny reading glasses and the expression of someone who has discovered bureaucracy and made it everyone else\'s problem.' },
-        { type:'speech', text:'"Before continuing, you must agree to the Quest Terms. They are mostly vibes, one curse, and a cookie policy I copied from a printer manual."' },
+        { type:'text', text:'A hunched goblin blocks the path with a scroll longer than his 3rd leg (at least 2cm). He wears cracked spectacles and the expression of someone who invented paperwork purely to torment travelers (he is German).' },
+        { type:'speech', text:'"Before continuing, you must agree to the Terms of Passage. They are mostly curses, one binding oath, and a clause about not being a horse girl."' },
       ],
       options: [
-        { text:'Accept without reading.', anyCorrect:true, response:'The goblin nods. "Standard procedure." You may have sold your shadow, but the meeting grows closer.' },
-        { text:'Ask for the short version.', anyCorrect:true, response:'"Be cool. Show up. Do not lick enchanted objects." Reasonable enough.' },
-        { text:'Initial every page with dramatic flair.', anyCorrect:true, response:'The goblin is moved to tears. No one has respected his admin before.' },
+        { text:'Sign without reading.', anyCorrect:true, response:'The goblin nods. "Standard procedure." You may have sold your shadow, but the haunted forest grows shorter ahead.' },
+        { text:'Ask for the short version.', anyCorrect:true, response:'"Be brave. Show up. Do not lick cursed relics or peoples boyfriends." Reasonable enough, even by witch-court standards.' },
+        { text:'Sign each line with dramatic flourish.', anyCorrect:true, response:'The goblin is moved to tears. No one has respected his scrollwork before. He used to be in an abusive relationship with an italian man.' },
       ],
     },
     {
-      title: 'THE MIRROR THAT ROASTS YOU',
+      title: 'THE TROLL AT THE WITCH-WARDED BRIDGE',
       content: [
-        { type:'text', text:`A silver mirror hangs from a dead tree. As ${quest.name} approaches, the glass ripples like water and immediately develops an attitude.` },
-        { type:'speech', text:'"To pass," says the mirror, "you must survive one honest reflection. Your hair is doing a side quest of its own."' },
+        { type:'text', text:'A troll in a moth-eaten warden\'s sash guards a bridge strung with bones, charms, and one suspiciously cheerful rat skull.' },
+        { type:'speech', text:'"None pass without a curse check," he rumbles. "State your business, your intentions, and whether you\'re smuggling any forbidden hexes."' },
       ],
       options: [
-        { text:'Thank the mirror for its honesty.', anyCorrect:true, response:'The mirror is disarmed. It was prepared for tears, not emotional maturity.' },
-        { text:'Roast the mirror back.', anyCorrect:true, response:'"At least I have depth," you say. The mirror cracks slightly. Devastating.' },
-        { text:'Pretend you did not hear it.', anyCorrect:true, response:'A classic defense. The mirror respects the ancient art of ignoring problems until brunch.' },
+        { text:'Declare peaceful but chaotic intentions with your Hinge match.', anyCorrect:true, response:'The troll brands your wrist with invisible rune-ink. "Chaotic, but properly warded. Proceed."' },
+        { text:'Compliment the bridge\'s craftsmanship.', anyCorrect:true, response:'The bridge creaks bashfully. The troll wipes away a tear and steps aside.' },
+        { text:'Swear not to wake the rat skull or hurt your Hinge match Sean physically.', anyCorrect:true, response:'The troll narrows his eyes. "Ambitious promise." Still, he lets you pass.' },
       ],
     },
     {
-      title: 'THE TROLL AT THE VIBE CHECKPOINT',
+      title: 'THE ORACLE RAT OF TANGLED WHISKERS',
       content: [
-        { type:'text', text:'A troll in a tiny security vest guards a bridge made of questionable planks and excellent intentions.' },
-        { type:'speech', text:'"No one passes without a vibe check," he grunts. "State your business, your energy, and whether you are bringing weird tension to the function."' },
+        { type:'text', text:'A glowing rat skull rises from a mossy altar, whiskers crackling with faint blue sparks. It has clearly been listening to too many conflicting prophecies (Fox News).' },
+        { type:'speech', text:'"Many squeak," says the Oracle. "Few decide. Can you withstand the sacred chaos of \'where does the haunted path even begin\'?"' },
       ],
       options: [
-        { text:'Declare peaceful but chaotic intentions.', anyCorrect:true, response:'The troll stamps your wrist with invisible ink. "Chaotic, but house-trained. Proceed."' },
-        { text:'Offer a compliment to the bridge.', anyCorrect:true, response:'The bridge creaks bashfully. The troll wipes away a tear and lets you pass.' },
-        { text:'Promise not to start lore-heavy drama.', anyCorrect:true, response:'The troll narrows his eyes. "Ambitious promise." Still, he steps aside.' },
+        { text:'Silence the chatter and trust the quest.', anyCorrect:true, response:'The skull hums approvingly. Peace is restored for approximately eight seconds.' },
+        { text:'Declare one clear destination (Cleveand, Ohio) like a true hero.', anyCorrect:true, response:'The fog parts overhead. Somewhere, a cursed map blushes.' },
+        { text:'Nod once, show your balls a little, and pass.', anyCorrect:true, response:'Illegal? Perhaps. Effective? Ancient scholars disagree, but the path opens.' },
       ],
     },
     {
-      title: 'THE ORACLE OF GROUP CHAT',
+      title: 'THE CART OF CURSED GRAIN',
       content: [
-        { type:'text', text:'A glowing phone rises from a stone pedestal. Its screen contains 78 unread messages and absolutely no plan.' },
-        { type:'speech', text:'"Many speak," says the Oracle. "Few decide. Can you withstand the sacred chaos of \'where are we meeting again?\'"' },
-      ],
-      options: [
-        { text:'Mute the chat and trust the quest.', anyCorrect:true, response:'The Oracle vibrates approvingly. Peace is restored for approximately eight seconds.' },
-        { text:'Send one clear message like a hero.', anyCorrect:true, response:'The heavens open. Somewhere, a calendar invite blushes.' },
-        { text:'React with a thumbs-up and vanish.', anyCorrect:true, response:'Cowardly? Perhaps. Effective? Ancient scholars disagree, but the gate opens.' },
-      ],
-    },
-    {
-      title: 'THE CART DILEMMA',
-      content: [
-        { type:'text', text:'A grain cart breaks loose at the top of a hill. At the bottom, five villagers argue about astrology directly in its path.' },
-        { type:'text', text:'Beside you is a lever. Pulling it redirects the cart into a very expensive artisanal oat milk stand run by a man who definitely says "mouthfeel".' },
+        { type:'text', text:'A cart of cursed grain breaks loose at the top of a ridge. At the bottom, five rat prosititutes argue fiercely about which witch makes the better chlamydia potion.' },
+        { type:'text', text:'Beside you is a lever. Pulling it redirects the cart into a stall run by a hooded merchant who insists his enchanted cheese has "notes".' },
         { type:'inscription', text:'"WHOM DO YOU SAVE?"' },
       ],
       options: [
-        { text:'Pull the lever. Save the astrology villagers.', anyCorrect:true, response:'The cart destroys the oat milk stand. A cloud of premium foam rises into the sky. You have saved lives and offended Södermalm.' },
-        { text:'Do nothing. Let fate take the wheel.', anyCorrect:true, response:'Fate immediately proves underqualified. The lesson is unclear, but emotionally expensive.' },
+        { text:'Pull the lever. Save the rat whores.', anyCorrect:true, response:'The cart obliterates the cheese stall. A cloud of enchanted dairy mist rises into the night sky. You have saved lives and angered exactly one merchant.' },
+        { text:'Do nothing. Let fate (rat jesus) take the wheel.', anyCorrect:true, response:'Fate immediately proves underqualified for cart-related decisions. The lesson is unclear, but the path continues.' },
       ],
     },
     {
-      title: 'THE RIDDLE OF THE OVERPACKED BAG',
+      title: 'THE FINAL TURN BENEATH THE BLOOD MOON',
       content: [
-        { type:'text', text:'An ancient backpack blocks the path. It bulges with cables, receipts, three lip balms, and a banana that has seen too much.' },
-        { type:'speech', text:'"I am carried everywhere, yet I carry the carrier. I contain what is needed, what is forgotten, and one object nobody can explain. What am I?"' },
+        { type:'text', text:'The haunted path reaches its final bend. The air smells of rain, old magic, and something nearby that has clearly overdone the incense (probably from a white girl).' },
+        { type:'speech', text:'"The destination is real," says the wind through the dead trees. "The reveal is earned. Step forward and try to look like you weren\'t confused by the effort a random guy put into this the whole way."' },
       ],
       options: [
-        { text:'A backpack.', correct:true, response:'The bag unzips itself with relief. "Finally. I was one loose mint away from becoming a cryptid."' },
-        { text:'A cursed cupboard.', correct:false, response:'Close in spirit, wrong in taxonomy. The banana makes eye contact. Try again.' },
-        { text:'Emotional baggage.', correct:false, response:'Too real. The quest is not licensed for therapy. Try again.' },
-      ],
-    },
-    {
-      title: 'THE SWAMP OF ALMOST PLANS',
-      content: [
-        { type:'text', text:'You step into a swamp where every reed whispers a half-plan: "maybe around seven", "somewhere central", "let\'s play it by ear".' },
-        { type:'speech', text:'"Only the decisive may cross," croaks a frog wearing a tiny crown. "Speak one concrete intention and be cleansed of vagueness."' },
-      ],
-      options: [
-        { text:'Say: I will go where the quest tells me.', anyCorrect:true, response:'The swamp parts. The frog crown glints with respect.' },
-        { text:'Say: I accept exact time and exact place.', anyCorrect:true, response:'A calendar icon appears in the mist and salutes you.' },
-        { text:'Say: I reject "we\'ll see".', anyCorrect:true, response:'The swamp screams, then becomes a normal puddle. Powerful magic.' },
-      ],
-    },
-    {
-      title: 'THE FINAL TURN OF SUSPICIOUSLY GOOD LIGHTING',
-      content: [
-        { type:'text', text:'The road reaches a final bend. The air smells like rain, victory, and someone nearby wearing too much cologne.' },
-        { type:'speech', text:'"The destination is real," says the wind. "The reveal is earned. Step forward and try to look casual about it."' },
-      ],
-      options: [
-        { text:'Step forward heroically.', anyCorrect:true, response:'Your silhouette is excellent. The quest has no notes.' },
-        { text:'Step forward like you meant to do that.', anyCorrect:true, response:'A dramatic cape appears for half a second, then remembers you did not pay for premium.' },
-        { text:'Step forward while pretending not to be excited.', anyCorrect:true, response:'The universe sees through you, but politely says nothing.' },
+        { text:'Step forward heroically.', anyCorrect:true, response:'Your silhouette against the blood moon is excellent (body is t). The quest has no notes.' },
+        { text:'Text you mom.', anyCorrect:true, response:'She is confused, but happy you completed the quest. She asks to meet this "Sean" guy.' },
+        { text:'Kill yourself.', anyCorrect:true, response:'You are brought back to life by the rat gods. You still have to go on a date with Sean. Sorry, I don't make the rules.' },
       ],
     },
   ];
